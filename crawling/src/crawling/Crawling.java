@@ -11,21 +11,18 @@ public class Crawling {
 
 	public static void main(String[] args) {
 
-		// Jsoup를 이용해서 http://www.cgv.co.kr/movies/ 크롤링
 		String url = "http://www.cgv.co.kr/movies/"; // 크롤링할 url지정
-		Document doc = null; // Document에는 페이지의 전체 소스가 저장된다
+		Document doc = null;
 
 		try {
 			doc = Jsoup.connect(url).get();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// select를 이용하여 원하는 태그를 선택한다. select는 원하는 값을 가져오기 위한 중요한 기능이다.
+		// select로 태그 선택
 		Elements element = doc.select("div.sect-movie-chart");
 
 		System.out.println("============================================================");
-
-		Iterator<Element> lists = element.select("li").iterator();
 
 		Elements elements = element.select("li");
 

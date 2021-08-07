@@ -25,24 +25,28 @@ public class Crawling {
 
 		System.out.println("============================================================");
 
-		Iterator<Element> lists = element.select("li").iterator();
-
 		Elements elements = element.select("li");
-		
-		int num = 0;
-		
+
+		int num = 1;
+
 		for (Element li : elements) {
+			if (li.text().length() > 0) { // 내용이 있는 li만 가져오기
+				// System.out.println(li.html());
 
-			//System.out.println(li.html());
+				int rank = num;
 
-			String rank = li.select("strong.rank").text().trim();
-			
-			String title = li.select("strong.title").text().trim();
-			
-			
-			System.out.println(rank + "\t" + title);
+				String title = li.select("strong.title").text().trim();
 
-		}
+				String reserveRate = li.select("strong.percent span").text().trim();
+				String release = li.select("span.txt-info").text().trim().substring(0, 10);
+
+				String imgUrl = li.select("span.thumb-image img").attr("src");
+
+				System.out.println(rank + "\t" + title + "\t" + reserveRate + "\t" + release + "\t" + imgUrl);
+
+				num++;
+			} // if
+		} // for
 
 //		while (lists.hasNext()) {
 //			System.out.println(lists.next().html());
