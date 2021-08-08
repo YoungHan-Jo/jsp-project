@@ -1,0 +1,80 @@
+package crawling;
+
+import java.io.IOException;
+import java.util.Iterator;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+public class Crawling {
+
+	public static void main(String[] args) {
+
+		String url = "http://www.cgv.co.kr/movies/"; // 크롤링할 url지정
+		Document doc = null;
+
+		try {
+			doc = Jsoup.connect(url).get();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		// select로 태그 선택
+		Elements element = doc.select("div.sect-movie-chart");
+
+		System.out.println("============================================================");
+
+		Elements elements = element.select("li");
+
+		int num = 1;
+
+		for (Element li : elements) {
+			if (li.text().length() > 0) { // 내용이 있는 li만 가져오기
+				// System.out.println(li.html());
+
+				int rank = num;
+
+				String title = li.select("strong.title").text().trim();
+
+				String reserveRate = li.select("strong.percent span").text().trim();
+				String releasedDate = li.select("span.txt-info").text().trim().substring(0, 10);
+
+				String imgUrl = li.select("span.thumb-image img").attr("src");
+
+				System.out.println(rank + "\t" + title + "\t" + reserveRate + "\t" + release + "\t" + imgUrl);
+
+				num++;
+			} // if
+		} // for
+
+//		while (lists.hasNext()) {
+//			System.out.println(lists.next().html());
+//			System.out.println("===========================================");
+//		}
+
+		/*
+		 * // Iterator을 사용하여 하나씩 값 가져오기 Iterator<Element> ie1 =
+		 * element.select("strong.rank").iterator(); Iterator<Element> ie2 =
+		 * element.select("strong.title").iterator();
+		 * 
+		 * List<String> images = new ArrayList<>();
+		 * 
+		 * //Iterator<Element> ie3 =
+		 * element.select("span.thumb-image").select("img").attr("src").iterator();
+		 * 
+		 * while (ie1.hasNext()) {
+		 * 
+		 * String rank = ie1.next().text(); String title = ie2.next().text(); String img
+		 * = ie2.next().parent().select("img").attr("src");
+		 * 
+		 * System.out.println(rank + "\t" + title + "\t" + img);
+		 * 
+		 * //System.out.println(ie1.next().text() + "\t" + ie2.next().text());
+		 * //System.out.println(ie2.next().text());
+		 * //System.out.println(ie2.next().parent().select("img").attr("src")); }
+		 */
+
+		System.out.println("============================================================");
+
+	}// main
+}
