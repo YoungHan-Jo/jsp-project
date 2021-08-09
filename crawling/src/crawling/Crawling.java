@@ -29,8 +29,7 @@ public class Crawling {
 
 		for (Element li : elements) {
 			if (li.text().length() > 0) { // 내용이 있는 li만 가져오기
-				// System.out.println(li.html());
-
+				
 				int rank = num;
 				String title = li.select("strong.title").text().trim();
 				String reserveRate = li.select("strong.percent span").text().trim();
