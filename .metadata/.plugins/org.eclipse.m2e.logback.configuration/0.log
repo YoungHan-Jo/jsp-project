@@ -555,3 +555,10 @@ Caused by: org.eclipse.core.runtime.CoreException: Cannot determine URI for '/js
 2021-08-11 02:42:05,861 [Worker-11: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\YoungHan-Jo\Desktop\jsp-project\jsp-project\src\main\resources
 2021-08-11 02:42:05,863 [Worker-11: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
 2021-08-11 02:42:05,864 [Worker-11: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\YoungHan-Jo\Desktop\jsp-project\jsp-project\src\test\resources
+2021-08-13 08:58:47,653 [Worker-5: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2021-08-13 09:07:17,494 [Worker-0: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2021-08-13 09:07:34,796 [Worker-1: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: jsp-project:jsp-project:0.0.1-SNAPSHOT @ C:\Users\admin\Desktop\jsp-project\jsp-project\pom.xml.
+2021-08-13 09:07:37,349 [Worker-1: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+2021-08-13 09:07:37,350 [Worker-1: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\admin\Desktop\jsp-project\jsp-project\src\main\resources
+2021-08-13 09:07:37,352 [Worker-1: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+2021-08-13 09:07:37,353 [Worker-1: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\admin\Desktop\jsp-project\jsp-project\src\test\resources
