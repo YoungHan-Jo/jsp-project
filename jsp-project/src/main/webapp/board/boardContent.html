@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1.0"
+    />
+    <title>Insert title here</title>
+    <!-- CSS  -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="css/materialize.css"
+      type="text/css"
+      rel="stylesheet"
+      media="screen,projection"
+    />
+    <link
+      href="css/style.css"
+      type="text/css"
+      rel="stylesheet"
+      media="screen,projection"
+    />
+  </head>
+  <body class="brown lighten-4">
+    <nav class="nav-extended brown darken-4">
+      <div class="nav-wrapper container">
+        <a href="#" class="brand-logo">Logo</a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+          ><i class="material-icons">menu</i></a
+        >
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="sass.html">Sass</a></li>
+          <li><a href="badges.html">Components</a></li>
+          <li><a href="collapsible.html">JavaScript</a></li>
+          <li><button class="waves-effect waves-light btn">로그인</button></li>
+        </ul>
+      </div>
+      <div class="nav-content container">
+        <ul class="tabs tabs-transparent">
+          <li class="tab right"><a href="#test1">Test 1</a></li>
+          <li class="tab right"><a class="active" href="#test2">Test 2</a></li>
+          <li class="tab right disabled"><a href="#test3">Disabled</a></li>
+          <li class="tab right"><a href="#test4">Test 4</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- mobile navbar-->
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="sass.html">Sass</a></li>
+      <li><a href="badges.html">Components</a></li>
+      <li><a href="collapsible.html">JavaScript</a></li>
+      <ul class="collapsible">
+        <li>
+          <div class="collapsible-header">
+            <i class="material-icons">filter_drama</i>First
+          </div>
+          <div class="collapsible-body">
+            <span>Lorem ipsum dolor sit amet.</span>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header">
+            <i class="material-icons">place</i>Second
+          </div>
+          <div class="collapsible-body">
+            <span>Lorem ipsum dolor sit amet.</span>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header">
+            <i class="material-icons">whatshot</i>Third
+          </div>
+          <div class="collapsible-body">
+            <span>Lorem ipsum dolor sit amet.</span>
+          </div>
+        </li>
+      </ul>
+      <li class="center">
+        <button class="waves-effect waves-light btn">로그인</button>
+      </li>
+    </ul>
+
+    <div class="container">
+      <div class="section">
+        <h4>게시판 상세</h4>
+        <hr />
+      </div>
+      <div class="row">
+        <div class="title"></div>
+        <table class="" id="boardList">
+          <tr>
+            <th>영화</th>
+            <td colspan="11">싱크홀</td>
+          </tr>
+          <tr>
+            <th>제목</th>
+            <td colspan="5">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
+            <td></td>
+            <td></td>
+            <td></td>
+
+            <th>작성일</th>
+            <td colspan="2">2021.08.11</td>
+          </tr>
+          <tr>
+            <th>작성자</th>
+            <td colspan="6">aaaa</td>
+            <th>조회수</th>
+            <td>11</td>
+            <th>추천수</th>
+            <td>22</td>
+            <th>댓글수</th>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td colspan="12">
+              <pre></pre>
+            </td>
+          </tr>
+          <tr>
+            <th>첨부파일</th>
+            <td colspan="11"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="section">
+        <div class="row">
+          <div class="col s12 right-align">
+            <a
+              class="btn waves-effect waves-light"
+              href="/board/boardModify.jsp?num=<%=boardVO.getNum() %>&pageNum=<%=pageNum %>"
+            >
+              <i class="material-icons left">edit</i>글수정
+            </a>
+            <a class="btn waves-effect waves-light" onclick="remove(event)">
+              <i class="material-icons left">delete</i>글삭제
+            </a>
+
+            <a
+              class="btn waves-effect waves-light"
+              href="/board/replyWrite.jsp?reRef=<%=boardVO.getReRef() %>&reLev=<%=boardVO.getReLev()%>&reSeq=<%=boardVO.getReSeq()%>&pageNum=<%=pageNum %>"
+            >
+              <i class="material-icons left">reply</i>답글
+            </a>
+
+            <a
+              class="btn waves-effect waves-light"
+              href="/board/boardList.jsp?pageNum=<%=pageNum%>"
+            >
+              <i class="material-icons left">list</i>글목록
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="page-footer brown darken-1">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">Footer Content</h5>
+            <p class="grey-text text-lighten-4">
+              You can use rows and columns here to organize your footer content.
+            </p>
+          </div>
+          <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">Links</h5>
+            <ul>
+              <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+              <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+              <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+              <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          © 2014 Copyright Text
+          <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/jquery-3.6.0.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
+    <script></script>
+  </body>
+</html>
