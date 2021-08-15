@@ -1,19 +1,47 @@
+<%@page import="java.util.Date"%>
+
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.example.domain.MovieVO"%>
+<%@page import="com.example.repository.MovieDAO"%>
+<%@page import="com.example.repository.TodaysRankDAO"%>
+<%@page import="com.example.domain.TodaysRankVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+//DAO객체 준비
+TodaysRankDAO rankDAO = TodaysRankDAO.getinstance();
+MovieDAO movieDAO = MovieDAO.getinstance();
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <jsp:include page="/include/head.jsp" />
 <style>
 div.rank {
-  margin: 0 25px 0 25px;
+	margin: 0 25px 0 25px;
 }
+
+div.rank,
+div.coming-soon{
+	border-radius: 10px;
+}
+
 img.movie-chart {
 	width: 80%;
+	border-radius: 10px;
 }
+
 .box-contents {
-  padding-left: 30px;
+	padding-left: 30px;
 }
+
+.coming-soon{
+	margin-bottom: 5px;
+	height: 45px
+}
+
+
 </style>
 </head>
 <body class="brown lighten-4">
@@ -24,27 +52,88 @@ img.movie-chart {
 
 	<div class="container">
 		<div class="section">
-			<h4>무비 차트</h4>
+			<h4>상영 중인 영화 차트</h4>
 			<hr />
 		</div>
 		<div class="section">
 			<div class="row">
+				<%
+				for (int i = 1; i <= 3; ++i) {
+
+					TodaysRankVO rankVO = rankDAO.getMovieByRank(i);
+					String movieNum = rankVO.getMovieNum();
+
+					MovieVO movieVO = movieDAO.getMovieByMovieNum(movieNum);
+
+					String str = movieVO.getReleaseDate();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+					SimpleDateFormat toString = new SimpleDateFormat("yyyy.MM.dd");
+
+					Date date = sdf.parse(str);
+
+					String releaseDate = toString.format(date);
+				%>
 				<div class="movie-chart-list col l3 m6 s12">
-					<div class="center rank">
-						<h4 class="white-text brown lighten-1">No.1</h4>
+					<div class="center rank red darken-2">
+						<h4 class="white-text ">
+							No.<%=i%></h4>
 					</div>
 					<div class="box-image center">
-						<a href="info.html"><img class="movie-chart"
-							src="/resources/image/poster.jpg" alt="" /></a>
+						<a href="/movie/movieInfo.jsp?movieNum=<%=movieNum%>"><img
+							class="movie-chart" src="<%=movieVO.getThumbnail()%>" alt="" /></a>
 					</div>
 					<div class="box-contents">
-						<h5 class="title">싱크홀</h5>
+						<h5 class="title"><%=movieVO.getMovieTitle()%></h5>
 						<div class="box-reservationRate">
-							<span>예매율</span> <span class="reservationRate">37.4%</span>
+							<span>예매율</span> <span class="reservationRate"><%=rankVO.getReservationRate()%></span>
 						</div>
 						<div>
-							<span>2021.08.11</span> <span>개봉</span>
+							<span><%=releaseDate%></span> <span>개봉</span>
 						</div>
+					</div>
+				</div>
+				<%
+				}
+				%>
+				<div class="movie-chart-list col l3 m6 s12 ">
+					<div class="carousel-box">
+						<div class="center coming-soon black">
+							<h4 class="white-text ">Coming Soon!</h4>
+						</div>
+						<div class="carousel carousel-slider" id="demo-carousel-auto"
+							data-indicators="true">
+							<%
+							for(int i = 1; i <=3; ++i){
+								TodaysRankVO rankVO = rankDAO.getMovieByRank(i);
+								String movieNum = rankVO.getMovieNum();
+
+								MovieVO movieVO = movieDAO.getMovieByMovieNum(movieNum);
+
+								String str = movieVO.getReleaseDate();
+								SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+								SimpleDateFormat toString = new SimpleDateFormat("yyyy.MM.dd");
+
+								Date date = sdf.parse(str);
+
+								String releaseDate = toString.format(date);
+								%>
+								<div class="carousel-item" href="#one!">
+								<div class="box-image center">
+									<a href="/resources/image/poster.jpg"><img
+										class="movie-chart" src="<%=movieVO.getThumbnail()%>" alt="" /></a>
+								</div>
+								<div class="center">
+									<h5>D-3</h5>
+								</div>
+								
+							</div>
+								<%
+							}
+							%>
+							
+							
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -52,24 +141,44 @@ img.movie-chart {
 		<div class="divider"></div>
 		<div class="section">
 			<div class="row">
+				<%
+				for (int i = 4; i <= 7; ++i) {
+
+					TodaysRankVO rankVO = rankDAO.getMovieByRank(i);
+					String movieNum = rankVO.getMovieNum();
+
+					MovieVO movieVO = movieDAO.getMovieByMovieNum(movieNum);
+
+					String str = movieVO.getReleaseDate();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+					SimpleDateFormat toString = new SimpleDateFormat("yyyy.MM.dd");
+
+					Date date = sdf.parse(str);
+
+					String releaseDate = toString.format(date);
+				%>
 				<div class="movie-chart-list col l3 m6 s12">
-					<div class="center rank">
-						<h4 class="white-text brown lighten-1">No.1</h4>
+					<div class="center rank brown lighten-1">
+						<h4 class="white-text">
+							No.<%=i%></h4>
 					</div>
 					<div class="box-image center">
-						<a href="info.html"><img class="movie-chart"
-							src="/resources/image/poster.jpg" alt="" /></a>
+						<a href="/movie/movieInfo.jsp?movieNum=<%=movieNum%>"><img
+							class="movie-chart" src="<%=movieVO.getThumbnail()%>" alt="" /></a>
 					</div>
 					<div class="box-contents">
-						<h5 class="title">싱크홀</h5>
+						<h5 class="title"><%=movieVO.getMovieTitle()%></h5>
 						<div class="box-reservationRate">
-							<span>예매율</span> <span class="reservationRate">37.4%</span>
+							<span>예매율</span> <span class="reservationRate"><%=rankVO.getReservationRate()%></span>
 						</div>
 						<div>
-							<span>2021.08.11</span> <span>개봉</span>
+							<span><%=releaseDate%></span> <span>개봉</span>
 						</div>
 					</div>
 				</div>
+				<%
+				}
+				%>
 			</div>
 		</div>
 	</div>
@@ -79,6 +188,18 @@ img.movie-chart {
 	<!-- end of footer -->
 
 
-	<script></script>
+	<script>
+		$(document).ready(function() {
+
+			$('#demo-carousel-auto').carousel();
+
+			setInterval(function() {
+
+				$('#demo-carousel-auto').carousel('next');
+
+			}, 3000);
+
+		});
+	</script>
 </body>
 </html>

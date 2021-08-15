@@ -22,7 +22,7 @@ public class CrawlingRank {
 		// select로 태그 선택
 		Elements element = doc.select("div.sect-story-movie");
 
-		content = element.text();
+		content = element.html();
 
 		return content;
 	}
@@ -54,14 +54,19 @@ public class CrawlingRank {
 				String imgUrl = li.select("span.thumb-image img").attr("src");
 				String movieNum = imgUrl.substring(imgUrl.lastIndexOf("/") + 1, imgUrl.lastIndexOf("/") + 6);
 				String reserveRate = li.select("strong.percent span").text().trim();
-				String releaseDate = li.select("span.txt-info").text().trim().substring(0, 10);
+				String date = li.select("span.txt-info").text().trim().substring(0, 10);
+				String releaseDate = date.replace(".", "");
+				
+				
 
 				System.out.println(rank + "\t" + movieNum + "\t" + title + "\t" + reserveRate + "\t" + releaseDate
 						+ "\t" + imgUrl);
 
 				String content = crawlingContent(movieNum);
 				
-				System.out.println(content);
+				
+				
+				
 
 				num++;
 			} // if

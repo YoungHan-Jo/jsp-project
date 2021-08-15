@@ -1,5 +1,17 @@
+<%@page import="com.example.repository.MovieDAO"%>
+<%@page import="com.example.domain.MovieVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+String movieNum = request.getParameter("movieNum");
+
+MovieDAO movieDAO = MovieDAO.getinstance();
+
+MovieVO movieVO = movieDAO.getMovieByMovieNum(movieNum);
+
+String releaseYear = movieVO.getReleaseDate().substring(0, 4);
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,26 +43,18 @@ img.movie-info {
 			<div class="row">
 				<div class="movie-info-img col l3 m4 s12">
 					<div class="box-image center">
-						<img class="movie-info" src="/resources/image/poster.jpg" alt="" />
+						<img class="movie-info" src="<%=movieVO.getThumbnail() %>" alt="" />
 					</div>
 				</div>
 				<div class="movie-story-area col l9 m8 s12">
 					<div class="section movie-story-title">
-						<h4 class="title">싱크홀</h4>
-						&nbsp;&nbsp;<span>2021</span>
+						<h4 class="title"><%=movieVO.getMovieTitle() %></h4>
+						&nbsp;&nbsp;<span><%=releaseYear %></span>
 					</div>
 					<div class="divider grey lighten-1"></div>
 					<div class="section">
 						<div class="movie-story">
-							<strong>사.상.초.유! 도심 속 초대형 재난 발생!</strong><br /> <br /> 서울 입성과
-							함께 내 집 마련의 꿈을 이룬 가장 ‘동원(김성균)’&nbsp;<br /> 이사 첫날부터 프로 참견러
-							‘만수’(차승원)와 사사건건 부딪힌다.<br /> <br /> ‘동원’은 자가취득을 기념하며 직장 동료들을
-							집들이에 초대하지만<br /> 행복한 단꿈도 잠시, 순식간에 빌라 전체가 땅 속으로 떨어지고 만다.<br /> <br />
-							마주치기만 하면 투닥거리는 빌라 주민 ‘만수’와 ‘동원’<br /> ‘동원’의 집들이에 왔던 ‘김대리’(이광수)와
-							인턴사원 ‘은주’(김혜준)까지!<br /> 지하 500m 싱크홀 속으로 떨어진 이들은 과연 무사히 빠져나갈 수
-							있을까?<br /> <br /> <strong>“한 500m 정도는 떨어진 것 같아”<br />
-								“우리… 나갈 수 있을까요?”&nbsp;
-							</strong>
+							<%=movieVO.getMovieSynopsis() %>
 						</div>
 					</div>
 				</div>
