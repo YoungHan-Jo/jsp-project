@@ -55,11 +55,11 @@ public class ScheduledMovieDAO {
 			con = JdbcUtils.getConnection();
 
 			String sql = "";
-			sql += "INSERT INTO scheduled_movie(rank, movie_num, d_day) ";
-			sql += " VALUES (?,?,?) ";
+			sql +="INSERT INTO scheduled_movie(scheduled_rank, movie_num, d_day) ";
+			sql +=" VALUES(?,?,?) ";
 
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, scheduledMovieVO.getRank());
+			pstmt.setInt(1, scheduledMovieVO.getScheduledRank());
 			pstmt.setString(2, scheduledMovieVO.getMovieNum());
 			pstmt.setString(3, scheduledMovieVO.getDDay());
 
@@ -86,7 +86,7 @@ public class ScheduledMovieDAO {
 			String sql = "";
 			sql += "SELECT * ";
 			sql += " FROM scheduled_movie ";
-			sql += " WHERE rank = ? ";
+			sql += " WHERE scheduled_rank = ? ";
 
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, rank);
@@ -95,7 +95,7 @@ public class ScheduledMovieDAO {
 
 			if (rs.next()) {
 				scheduledMovieVO = new ScheduledMovieVO();
-				scheduledMovieVO.setRank(rs.getInt("rank"));
+				scheduledMovieVO.setScheduledRank(rs.getInt("scheduled_rank"));
 				scheduledMovieVO.setMovieNum(rs.getString("movie_num"));
 				scheduledMovieVO.setDDay(rs.getString("d_day"));
 			}

@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ScheduledMovieVO {
-	private int rank;
+	private int scheduledRank;
 	private String movieNum;
 	private String dDay;
 }

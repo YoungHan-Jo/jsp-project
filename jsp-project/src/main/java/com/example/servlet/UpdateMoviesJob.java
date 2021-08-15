@@ -14,46 +14,50 @@ import com.example.domain.MovieVO;
 import com.example.domain.ScheduledMovieVO;
 import com.example.domain.TodaysRankVO;
 import com.example.repository.MovieDAO;
+import com.example.repository.ScheduledMovieDAO;
 import com.example.repository.TodaysRankDAO;
 
 public class UpdateMoviesJob implements Job {
+	
+	private Elements lists;
 
+	private String movieTitle;
+	private String thumbnail;
+	private String movieNum;
+	private String reservationRate;
+	private String date;
+	private String releaseDate;
+	private String synopsis;
+	private String dDay;
+	
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
+
+		
 
 		// DAO 객체 준비
 		TodaysRankDAO rankDAO = TodaysRankDAO.getinstance();
 		MovieDAO movieDAO = MovieDAO.getinstance();
+		ScheduledMovieDAO scheduledMovieDAO = ScheduledMovieDAO.getinstance();
 
 		// 웹크롤링으로 정보 가져오기
-		String url = "http://www.cgv.co.kr/movies/"; // 크롤링할 url지정
-		Document doc = null;
-
-		try {
-			doc = Jsoup.connect(url).get();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		// select로 태그 선택
-		Elements element = doc.select("div.sect-movie-chart");
-		Elements elements = element.select("li");
-
+		lists = crawlingTodaysRank();
 		// todays_rank 테이블 초기화
 		rankDAO.deleteAll();
 
 		int num = 1;
-		// 1~7위까지 하나씩 돌리기
-		for (Element li : elements) {
+		// 1~7위까지 돌리기
+		for (Element li : lists) {
 			if (li.text().length() > 0) { // 내용이 있는 li만 가져오기
 
 				int movieRank = num;
-				String movieTitle = li.select("strong.title").text().trim();
-				String thumbnail = li.select("span.thumb-image img").attr("src");
-				String movieNum = thumbnail.substring(thumbnail.lastIndexOf("/") + 1, thumbnail.lastIndexOf("/") + 6);
-				String reservationRate = li.select("strong.percent span").text().trim();
-				String date = li.select("span.txt-info").text().trim().substring(0, 10);
-				String releaseDate = date.replace(".", "");
-				String synopsis = crawlingSynopsis(movieNum);
+				movieTitle = li.select("strong.title").text().trim();
+				thumbnail = li.select("span.thumb-image img").attr("src");
+				movieNum = thumbnail.substring(thumbnail.lastIndexOf("/") + 1, thumbnail.lastIndexOf("/") + 6);
+				reservationRate = li.select("strong.percent span").text().trim();
+				date = li.select("span.txt-info").text().trim().substring(0, 10);
+				releaseDate = date.replace(".", "");
+				synopsis = crawlingSynopsis(movieNum);
 
 				// ======== todays_rank 추가 ========
 				TodaysRankVO rankVO = new TodaysRankVO();
@@ -81,28 +85,35 @@ public class UpdateMoviesJob implements Job {
 			} // if
 		} // for
 
-		Elements lists = crawlingScheduledMovie();
+		// ================= 개봉예정 영화 추가 =================
+
+		// 웹크롤링으로 정보 가져오기
+		lists = crawlingScheduledMovie();
+		// 테이블 초기화
+		scheduledMovieDAO.deleteAll();
 
 		num = 1;
-
+		// 1~3위까지 돌리기
 		for (Element li : lists) {
 			if (li.text().length() > 0) {
 				int rank = num;
-				String movieTitle = li.select("strong.title").text().trim();
-				String thumbnail = li.select("span.thumb-image img").attr("src");
-				String movieNum = thumbnail.substring(thumbnail.lastIndexOf("/") + 1, thumbnail.lastIndexOf("/") + 6);
-				String date = li.select("span.txt-info").text().trim().substring(0, 10);
-				String releaseDate = date.replace(".", "");
-				String dDay = li.select("em.dday").text().trim();
-				String synopsis = crawlingSynopsis(movieNum);
+				movieTitle = li.select("strong.title").text().trim();
+				thumbnail = li.select("span.thumb-image img").attr("src");
+				movieNum = thumbnail.substring(thumbnail.lastIndexOf("/") + 1, thumbnail.lastIndexOf("/") + 6);
+				date = li.select("span.txt-info").text().trim().substring(0, 10);
+				releaseDate = date.replace(".", "");
+				dDay = li.select("em.dday").text().trim();
+				synopsis = crawlingSynopsis(movieNum);
 
 				// ======== todays_rank 추가 ========
 				ScheduledMovieVO scheduledMovieVO = new ScheduledMovieVO();
-				scheduledMovieVO.setRank(rank);
+				scheduledMovieVO.setScheduledRank(rank);
 				scheduledMovieVO.setMovieNum(movieNum);
 				scheduledMovieVO.setDDay(dDay);
-				
-				
+
+				scheduledMovieDAO.insert(scheduledMovieVO);
+				// ======== todays_rank 추가 완료 ========
+
 				// ======== movie 테이블 추가 ========
 				if (movieDAO.getCountByMovieNum(movieNum) == 0) { // movie 테이블에 존재하지 않을 때
 					MovieVO movieVO = new MovieVO();
@@ -115,14 +126,10 @@ public class UpdateMoviesJob implements Job {
 					movieDAO.insert(movieVO);
 				}
 				// ======== movie 테이블 추가 완료 ========
-				
-				
+
 				num++;
-
 			} // if
-
 		} // for
-
 	} // excute
 
 	private String crawlingSynopsis(String movieNum) {
@@ -163,5 +170,23 @@ public class UpdateMoviesJob implements Job {
 
 		return lists;
 	}// crawlingScheduledMovie
+
+	private Elements crawlingTodaysRank() {
+		Elements lists = null;
+
+		String url = "http://www.cgv.co.kr/movies/"; // 크롤링할 url지정
+		Document doc = null;
+
+		try {
+			doc = Jsoup.connect(url).get();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		// select로 태그 선택
+		Elements element = doc.select("div.sect-movie-chart");
+		lists = element.select("li");
+
+		return lists;
+	}// crawlingTodaysRank
 
 }

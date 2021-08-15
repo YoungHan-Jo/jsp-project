@@ -1,3 +1,5 @@
+<%@page import="com.example.domain.ScheduledMovieVO"%>
+<%@page import="com.example.repository.ScheduledMovieDAO"%>
 <%@page import="java.util.Date"%>
 
 <%@page import="java.text.SimpleDateFormat"%>
@@ -11,6 +13,7 @@
 //DAO객체 준비
 TodaysRankDAO rankDAO = TodaysRankDAO.getinstance();
 MovieDAO movieDAO = MovieDAO.getinstance();
+ScheduledMovieDAO scheduledMovieDAO = ScheduledMovieDAO.getinstance();
 %>
 
 <!DOCTYPE html>
@@ -22,8 +25,7 @@ div.rank {
 	margin: 0 25px 0 25px;
 }
 
-div.rank,
-div.coming-soon{
+.dday, div.rank, div.coming-soon {
 	border-radius: 10px;
 }
 
@@ -36,12 +38,10 @@ img.movie-chart {
 	padding-left: 30px;
 }
 
-.coming-soon{
+.dday, .coming-soon {
 	margin-bottom: 5px;
-	height: 45px
+	height: 45px;
 }
-
-
 </style>
 </head>
 <body class="brown lighten-4">
@@ -95,7 +95,7 @@ img.movie-chart {
 				<%
 				}
 				%>
-				<div class="movie-chart-list col l3 m6 s12 ">
+				<div class="movie-chart-list col l3 m6 s12 hide-on-med-and-down">
 					<div class="carousel-box">
 						<div class="center coming-soon black">
 							<h4 class="white-text ">Coming Soon!</h4>
@@ -103,9 +103,9 @@ img.movie-chart {
 						<div class="carousel carousel-slider" id="demo-carousel-auto"
 							data-indicators="true">
 							<%
-							for(int i = 1; i <=3; ++i){
-								TodaysRankVO rankVO = rankDAO.getMovieByRank(i);
-								String movieNum = rankVO.getMovieNum();
+							for (int i = 1; i <= 3; ++i) {
+								ScheduledMovieVO scheduledMovieVO = scheduledMovieDAO.getMovieByRank(i);
+								String movieNum = scheduledMovieVO.getMovieNum();
 
 								MovieVO movieVO = movieDAO.getMovieByMovieNum(movieNum);
 
@@ -116,22 +116,22 @@ img.movie-chart {
 								Date date = sdf.parse(str);
 
 								String releaseDate = toString.format(date);
-								%>
-								<div class="carousel-item" href="#one!">
+							%>
+							<div class="carousel-item" href="#one!">
 								<div class="box-image center">
-									<a href="/resources/image/poster.jpg"><img
+									<a href="/movie/movieInfo.jsp?movieNum=<%=movieNum%>"><img
 										class="movie-chart" src="<%=movieVO.getThumbnail()%>" alt="" /></a>
 								</div>
-								<div class="center">
-									<h5>D-3</h5>
+								<div class="center black dday">
+									<h4 class="white-text"><%=scheduledMovieVO.getDDay()%></h4>
 								</div>
-								
+
 							</div>
-								<%
+							<%
 							}
 							%>
-							
-							
+
+
 						</div>
 
 					</div>
