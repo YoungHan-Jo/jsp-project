@@ -6,10 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
-
 public class JdbcUtils {
 
 	public static final String URL = "jdbc:mysql://localhost:3306/jspproject?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul";
@@ -17,7 +13,7 @@ public class JdbcUtils {
 	public static final String PASSWD = "1234";
 
 	public static Connection getConnection() throws Exception {
-		
+
 		Connection con = null;
 
 		Class.forName("com.mysql.cj.jdbc.Driver");

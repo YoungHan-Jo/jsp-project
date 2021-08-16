@@ -38,6 +38,11 @@ img.movie-chart {
 	padding-left: 30px;
 }
 
+.carousel-slider,
+.carousel-box {
+	height: 500px;
+}
+
 .dday, .coming-soon {
 	margin-bottom: 5px;
 	height: 45px;
@@ -52,7 +57,7 @@ img.movie-chart {
 
 	<div class="container">
 		<div class="section">
-			<h4>상영 중인 영화 차트</h4>
+			<h4>상영 중인 영화</h4>
 			<hr />
 		</div>
 		<div class="section">

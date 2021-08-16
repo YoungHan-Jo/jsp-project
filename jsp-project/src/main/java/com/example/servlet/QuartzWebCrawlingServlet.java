@@ -39,13 +39,11 @@ public class QuartzWebCrawlingServlet extends HttpServlet {
 			// Trigger 객체 준비
 			Trigger trigger = newTrigger()
 					.withIdentity("triggerName", Scheduler.DEFAULT_GROUP)
-					.withSchedule(cronSchedule("0 * * * * ?"))
+					.withSchedule(cronSchedule("0 0 * * * ?"))
 					.build();
 			
 			// 트리거를 스케줄러에 등록하면 스케줄에 따라서 실행됨
 			scheduler.scheduleJob(jobDetail,trigger);
-			
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();

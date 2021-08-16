@@ -15,8 +15,9 @@
         <h4>회원가입</h4>
         <hr />
       </div>
+      <div class="container">
       <div class="row container">
-        <form class="col s12">
+        <form class="col s12" action="/member/joinPro.jsp" method="post" >
           <div class="row">
             <div class="input-field col s12">
               <i class="material-icons prefix">account_box</i
@@ -104,6 +105,7 @@
             </button>
           </div>
         </form>
+      </div>
       </div>
     </div>
 

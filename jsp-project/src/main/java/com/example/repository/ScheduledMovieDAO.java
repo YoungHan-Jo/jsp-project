@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.example.domain.ScheduledMovieVO;
-import com.example.domain.TodaysRankVO;
 
 public class ScheduledMovieDAO {
 
@@ -55,8 +54,8 @@ public class ScheduledMovieDAO {
 			con = JdbcUtils.getConnection();
 
 			String sql = "";
-			sql +="INSERT INTO scheduled_movie(scheduled_rank, movie_num, d_day) ";
-			sql +=" VALUES(?,?,?) ";
+			sql += "INSERT INTO scheduled_movie(scheduled_rank, movie_num, d_day) ";
+			sql += " VALUES(?,?,?) ";
 
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, scheduledMovieVO.getScheduledRank());

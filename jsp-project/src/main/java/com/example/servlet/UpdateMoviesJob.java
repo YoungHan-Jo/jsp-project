@@ -33,20 +33,18 @@ public class UpdateMoviesJob implements Job {
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 
-		
-
 		// DAO 객체 준비
 		TodaysRankDAO rankDAO = TodaysRankDAO.getinstance();
 		MovieDAO movieDAO = MovieDAO.getinstance();
 		ScheduledMovieDAO scheduledMovieDAO = ScheduledMovieDAO.getinstance();
 
-		// 웹크롤링으로 정보 가져오기
+		// 크롤링으로 TodaysRank 정보 가져오기
 		lists = crawlingTodaysRank();
-		// todays_rank 테이블 초기화
+		// todays_rank DB테이블 초기화
 		rankDAO.deleteAll();
 
 		int num = 1;
-		// 1~7위까지 돌리기
+		// 크롤링 해 온 1~7위 돌려서 DB 입력
 		for (Element li : lists) {
 			if (li.text().length() > 0) { // 내용이 있는 li만 가져오기
 
@@ -69,7 +67,7 @@ public class UpdateMoviesJob implements Job {
 				// ======== todays_rank 추가 완료 ========
 
 				// ======== movie 테이블 추가 ========
-				if (movieDAO.getCountByMovieNum(movieNum) == 0) { // movie 테이블에 존재하지 않을 때
+				if (movieDAO.getCountByMovieNum(movieNum) == 0) { // movie 테이블에 존재하지 않는
 					MovieVO movieVO = new MovieVO();
 					movieVO.setMovieNum(movieNum);
 					movieVO.setMovieTitle(movieTitle);
@@ -87,13 +85,13 @@ public class UpdateMoviesJob implements Job {
 
 		// ================= 개봉예정 영화 추가 =================
 
-		// 웹크롤링으로 정보 가져오기
+		// 크롤링으로 ScheduledMovie 정보 가져오기
 		lists = crawlingScheduledMovie();
-		// 테이블 초기화
+		// shceduled_movie DB테이블 초기화
 		scheduledMovieDAO.deleteAll();
 
 		num = 1;
-		// 1~3위까지 돌리기
+		// 크롤링 해 온 1~3위 돌리기
 		for (Element li : lists) {
 			if (li.text().length() > 0) {
 				int rank = num;
@@ -132,6 +130,7 @@ public class UpdateMoviesJob implements Job {
 		} // for
 	} // excute
 
+	// 시놉시스 정보 크롤링
 	private String crawlingSynopsis(String movieNum) {
 		String synopsis = "";
 
@@ -151,6 +150,7 @@ public class UpdateMoviesJob implements Job {
 		return synopsis;
 	}// crawlingSynopsis
 
+	// 상영 예정 영화 목록 크롤링
 	private Elements crawlingScheduledMovie() {
 		Elements lists = null;
 
@@ -171,6 +171,7 @@ public class UpdateMoviesJob implements Job {
 		return lists;
 	}// crawlingScheduledMovie
 
+	// 상영 중인 영화 랭크 목록 크롤링
 	private Elements crawlingTodaysRank() {
 		Elements lists = null;
 
