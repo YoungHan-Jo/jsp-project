@@ -22,7 +22,7 @@ String id = (String) session.getAttribute("sessionLoginId");
 			<%
 			} else { // 로그인 되어있음
 			%>
-			<li><a href="/member/modifyMember.jsp">회원 정보</a></li>
+			<li><a href="/member/myInfo.jsp">내 정보</a></li>
 			<li><a href="/member/logout.jsp"><button
 						class="waves-effect waves-light btn">로그아웃</button></a></li>
 			<%
@@ -30,14 +30,7 @@ String id = (String) session.getAttribute("sessionLoginId");
 			%>
 		</ul>
 	</div>
-	<div class="nav-content container">
-		<ul class="tabs tabs-transparent">
-			<li class="tab right"><a href="#test1">Test 1</a></li>
-			<li class="tab right"><a class="active" href="#test2">Test 2</a></li>
-			<li class="tab right disabled"><a href="#test3">Disabled</a></li>
-			<li class="tab right"><a href="#test4">Test 4</a></li>
-		</ul>
-	</div>
+	
 </nav>
 
 <!-- mobile navbar-->
