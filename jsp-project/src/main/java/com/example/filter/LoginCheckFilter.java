@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(urlPatterns = { "/member/logout.jsp","/member/modifyMember.jsp", "/member/removeMember.jsp" })
+@WebFilter(urlPatterns = { "/member/logout.jsp","/member/myInfo.jsp","/member/modifyMember.jsp", "/member/removeMember.jsp" })
 public class LoginCheckFilter implements Filter {
 
 	@Override

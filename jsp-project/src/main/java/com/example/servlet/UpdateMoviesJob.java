@@ -44,7 +44,7 @@ public class UpdateMoviesJob implements Job {
 		rankDAO.deleteAll();
 
 		int num = 1;
-		// 크롤링 해 온 1~7위 돌려서 DB 입력
+		// 크롤링해 온 1~7위 돌려서 DB 입력
 		for (Element li : lists) {
 			if (li.text().length() > 0) { // 내용이 있는 li만 가져오기
 

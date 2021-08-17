@@ -33,7 +33,6 @@ if(BCrypt.checkpw(passwd, memberVO.getPasswd())){ // 비밀번호 일치
 	
 	response.sendRedirect("/index.jsp");
 	
-	
 }else{ // 비밀번호 불일치
 	%>
 	<script>

@@ -176,5 +176,37 @@ public class MemberDAO {
 
 		return count;
 	} // getCountById
+	
+	public void modifyMember(MemberVO memberVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = JdbcUtils.getConnection();
+
+			String sql = "";
+			sql += "UPDATE member ";
+			sql += " SET name = ?, birthday = ?, gender = ?, email = ?, recv_email = ? ";
+			sql += " WHERE id = ? ";
+
+			pstmt = con.prepareStatement(sql);			
+			pstmt.setString(1, memberVO.getName());
+			pstmt.setString(2, memberVO.getBirthday());
+			pstmt.setString(3, memberVO.getGender());
+			pstmt.setString(4, memberVO.getEmail());
+			pstmt.setString(5, memberVO.getRecvEmail());
+			pstmt.setString(6, memberVO.getId());
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+
+	} // modifyMember
+	
 
 }
