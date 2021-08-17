@@ -23,31 +23,42 @@ String id = (String) session.getAttribute("sessionLoginId");
 		<!-- end of sideMenu -->
 		<div class="col s12 l9 container">
 			<div class="section">
-				<h4>회원탈퇴</h4>
+				<h4>비밀번호 변경</h4>
 				<hr />
 			</div>
 			<div class="container">
 				<div class="row container">
-					<form class="col s12" action="/member/removeMemberPro.jsp"
+					<form class="col s12" action="/member/changePasswdPro.jsp"
 						method="post">
-						<div class="row">
-							<div class="input-field col s12">
-								<i class="material-icons prefix">account_box</i><input id="id"
-									name="id" type="text" value="<%=id%>"
-									class="validate" disabled /> <label for="id">아이디</label>
-							</div>
-						</div>
+						<div class="section"><h5>현재 비밀번호</h5></div>
+						<div class="divider"></div>
 						<div class="row">
 							<div class="input-field col s12">
 								<i class="material-icons prefix">lock</i><input id="passwd"
 									name="passwd" type="password" class="validate" /> <label
-									for="passwd">비밀번호</label>
+									for="passwd">현재 비밀번호</label>
+							</div>
+						</div>
+						<div class="section"><h5>새로운 비밀번호</h5></div>
+						<div class="divider"></div>
+						<div class="row">
+							<div class="input-field col s12">
+								<i class="material-icons prefix">lock</i><input id="newPasswd"
+									name="newPasswd" type="password" class="validate" /> <label
+									for="newPasswd">비밀번호</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<i class="material-icons prefix">lock</i><input id="newPasswd2"
+									name="newPasswd2" type="password" class="validate" /> <label
+									for="newPasswd2">비밀번호 확인</label>
 							</div>
 						</div>
 						<br />
 						<div class="row center">
 							<button class="btn waves-effect waves-light" type="submit">
-								회원탈퇴 <i class="material-icons right">create</i>
+								비밀번호 변경 <i class="material-icons right">create</i>
 							</button>
 						</div>
 					</form>

@@ -208,5 +208,32 @@ public class MemberDAO {
 
 	} // modifyMember
 	
+	public void changePasswd(MemberVO memberVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = JdbcUtils.getConnection();
+
+			String sql = "";
+			sql += "UPDATE member ";
+			sql += " SET passwd = ? ";
+			sql += " WHERE id = ? ";
+
+			pstmt = con.prepareStatement(sql);			
+			pstmt.setString(1, memberVO.getPasswd());
+			pstmt.setString(2, memberVO.getId());
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+
+	} // changePasswd
+	
 
 }

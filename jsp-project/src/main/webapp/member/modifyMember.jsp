@@ -35,7 +35,7 @@ String gender = memberVO.getGender();
 		<!-- sideMenu area -->
 		<jsp:include page="/include/sideMenu.jsp" />
 		<!-- end of sideMenu -->
-		<div class="col s12 m9 l9 container">
+		<div class="col s12 l9 container">
 			<div class="section">
 				<h4>회원정보 수정</h4>
 				<hr />

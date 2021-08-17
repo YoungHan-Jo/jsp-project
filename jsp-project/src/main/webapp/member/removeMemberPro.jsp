@@ -12,16 +12,33 @@ MemberDAO memberDAO = MemberDAO.getinstance();
 MemberVO memberVO = memberDAO.getMemberById(id);
 
 if (BCrypt.checkpw(passwd, memberVO.getPasswd()) == true) { // 비밀번호 일치
-%>
-<script>
-	var isDel = confirm('정말 탈퇴하겠습니까?');
-	if (isDel == true) {
-		
-	} else {
-		history.back();
-	}
-</script>
-<%
+	
+	//세션 삭제
+	session.invalidate();
+	
+	//쿠키 삭제
+	Cookie[] cookies = request.getCookies();
+	if(cookies != null){
+		for(Cookie cookie : cookies){
+			if(cookie.getName().equals("cookieLoginId")){
+				cookie.setMaxAge(0);
+				cookie.setPath("/");
+				response.addCookie(cookie);
+			}
+		}//for
+	}//if
+	
+	//DB에서 데이터 삭제
+	memberDAO.deleteById(memberVO.getId());
+				
+	%>
+	<script>
+	alert('회원탈퇴 완료');
+	location.href='/index.jsp';
+	</script>
+	<%
+	
+	
 } else { // 비밀번호 불일치
 %>
 <script>
