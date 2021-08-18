@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.example.domain.MemberVO;
-import com.example.domain.MovieVO;
+
 
 
 public class MemberDAO {
@@ -13,7 +13,7 @@ public class MemberDAO {
 	// =====================싱글톤 클래스 설계 =========================
 	private static MemberDAO instance;
 
-	public static MemberDAO getinstance() {
+	public static MemberDAO getInstance() {
 		if (instance == null) {
 			instance = new MemberDAO();
 		}

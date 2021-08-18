@@ -1,9 +1,52 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.example.domain.PageDTO"%>
+<%@page import="com.example.domain.Criteria"%>
+<%@page import="java.util.List"%>
+<%@page import="com.example.domain.BoardVO"%>
+<%@page import="com.example.repository.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%
+String id = (String) session.getAttribute("sessionLoginId");
+%>
+<%
+// 글목록 가져오기 조건 객체 준비
+Criteria cri = new Criteria(); // 기본 생성자 1페이지 10줄
+
+//pageNum cri에 저장
+String strPageNum = request.getParameter("pageNum");
+if (strPageNum != null) {
+	cri.setPageNum(Integer.parseInt(strPageNum));
+}
+
+//tab 파라미터 가져오기
+String tab = request.getParameter("tab");
+if (tab != null) {
+	cri.setTab(tab);
+}
+
+//DAO 객체준비
+BoardDAO boardDAO = BoardDAO.getInstance();
+
+// board 테이블에서 전체 글 가져오기
+List<BoardVO> boardList = boardDAO.getBoards(cri);
+
+// 전체 글(조건에 맞는 글) 개수 가져오기
+int totalCount = boardDAO.getCountByCriteria(cri);
+
+//페이지 블록정보
+PageDTO pageDTO = new PageDTO(cri, totalCount);
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <jsp:include page="/include/head.jsp" />
+<style>
+tr#boardList {
+	cursor: pointer;
+}
+</style>
 </head>
 <body class="brown lighten-4">
 	<!-- navbar area -->
@@ -17,75 +60,114 @@
 		</div>
 		<div class="row">
 			<div class="col s6 m4 l3">
-				<select>
-					<option value="" disabled selected>Choose Movie</option>
-					<option value="1">Option 1</option>
-					<option value="2">Option 2</option>
-					<option value="3">Option 3</option>
+				<select id="tabs">
+					<option value="" disabled <%=cri.getTab().equals("") || cri.getTab()==null ? "selected" : ""%> >탭 선택</option>
+					<option value="R" <%=cri.getTab().equals("R") ? "selected" : ""%>>리뷰</option>
+					<option value="I" <%=cri.getTab().equals("I") ? "selected" : ""%>>정보</option>
+					<option value="C" <%=cri.getTab().equals("C") ? "selected" : ""%>>잡담</option>
 				</select> <label>Materialize Select</label>
 			</div>
+			<%
+			if (id != null) {
+			%>
 			<div class="col s6 m8 l9">
-				<a href="#1" class="btn waves-effect waves-light right"> <i
+				<a href="/board/boardWrite.jsp"
+					class="btn waves-effect waves-light right"> <i
 					class="material-icons left">create</i>새글쓰기
 				</a>
 			</div>
+			<%
+			}
+			%>
+
 		</div>
 		<div class="row">
 			<table class="highlight">
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>영화</th>
+						<th>탭</th>
 						<th>글 제목</th>
-						<th>글쓴이</th>
 						<th>작성자</th>
+						<th>작성일</th>
 						<th>추천수</th>
 						<th>조회수</th>
 					</tr>
 				</thead>
 
 				<tbody>
-					<tr>
-						<td>3</td>
-						<td>싱크홀</td>
-						<td>dㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
-						<td>Alvin</td>
-						<td>2021.08.04</td>
-						<td>6</td>
-						<td>5</td>
+
+					<%
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String date;
+
+					for (BoardVO boardVO : boardList) {
+						date = sdf.format(boardVO.getRegDate());
+					%>
+					<tr id="boardList"
+						onclick="location.href='/board/boardContent.jsp?boardNum=<%=boardVO.getBoardNum()%>&tab=<%=cri.getTab()%>&pageNum=<%=cri.getPageNum()%>'">
+						<td><%=boardVO.getBoardNum()%></td>
+						<td>
+							<%
+							if (boardVO.getTab().equals("R")) {
+							%>리뷰<%
+							} else if (boardVO.getTab().equals("I")) {
+							%>정보<%
+							} else if (boardVO.getTab().equals("C")) {
+							%>잡담<%
+							} else {
+							%>기타<%
+							}
+							%>
+						</td>
+						<td style="width: 50%"><%=boardVO.getSubject()%></td>
+						<td><%=boardVO.getMemberId()%></td>
+						<td><%=date%></td>
+						<td>추천수</td>
+						<td><%=boardVO.getViewCount()%></td>
 					</tr>
-					<tr>
-						<td>2</td>
-						<td>Jellybean</td>
-						<td>$3.76</td>
-						<td>Alvin</td>
-						<td>2021.08.04</td>
-						<td>2</td>
-						<td>20</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>Lollipop</td>
-						<td>$7.00</td>
-						<td>Alvin</td>
-						<td>2021.08.04</td>
-						<td>3</td>
-						<td>30</td>
-					</tr>
+					<%
+					}
+					%>
 				</tbody>
 			</table>
 		</div>
 		<div class="row center">
 			<ul class="pagination">
-				<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a>
+				<%
+				// 이전 버튼
+				if (pageDTO.isPrev()) {
+				%>
+				<li class="waves-effect"><a
+					href="/board/boardList.jsp?pageNum=<%=pageDTO.getStartPage() - 1%>">
+						<i class="material-icons">chevron_left</i>
+				</a></li>
+				<%
+				}
+				%>
+				<%
+				// 페이지 블록 내 최대 5개씩 출력
+				for (int i = pageDTO.getStartPage(); i <= pageDTO.getEndPage(); ++i) {
+				%>
+				<li class="waves-effect <%=cri.getPageNum() == i ? "active" : ""%>">
+					<a href="/board/boardList.jsp?tab=<%=cri.getTab()%>&pageNum=<%=i%>"><%=i%></a>
 				</li>
-				<li class="active"><a href="#!">1</a></li>
-				<li class="waves-effect"><a href="#!">2</a></li>
-				<li class="waves-effect"><a href="#!">3</a></li>
-				<li class="waves-effect"><a href="#!">4</a></li>
-				<li class="waves-effect"><a href="#!">5</a></li>
-				<li class="waves-effect"><a href="#!"><i
-						class="material-icons">chevron_right</i></a></li>
+				<%
+				}
+				%>
+
+				<%
+				// 다음 버튼
+				if (pageDTO.isNext()) {
+				%>
+				<li class="waves-effect"><a
+					href="/board/boardList.jsp?pageNum=<%=pageDTO.getEndPage() + 1%>">
+						<i class="material-icons">chevron_right</i>
+				</a></li>
+				<%
+				}
+				%>
+
 			</ul>
 		</div>
 	</div>
@@ -101,7 +183,7 @@
 								<option value="subject">제목</option>
 								<option value="content">내용</option>
 								<option value="mid">작성자</option>
-							</select> <label>검색 조건</label>
+							</select><label>검색 조건</label>
 						</div>
 					</div>
 
@@ -129,6 +211,12 @@
 	<!-- footer area -->
 	<jsp:include page="/include/footer.jsp" />
 	<!-- end of footer -->
-	<script></script>
+	<script>
+		$('select#tabs').on('change', function(event) {
+			var tab = event.target.value;
+
+			location.href = `/board/boardList.jsp?tab=\${tab}&pageNum=1`;
+		})
+	</script>
 </body>
 </html>

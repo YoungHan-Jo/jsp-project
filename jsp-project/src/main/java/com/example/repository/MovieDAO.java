@@ -12,7 +12,7 @@ public class MovieDAO {
 	// =====================싱글톤 클래스 설계 =========================
 	private static MovieDAO instance;
 
-	public static MovieDAO getinstance() {
+	public static MovieDAO getInstance() {
 		if (instance == null) {
 			instance = new MovieDAO();
 		}

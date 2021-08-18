@@ -11,7 +11,7 @@ String passwd = request.getParameter("passwd");
 String rememberMe = request.getParameter("rememberMe");
 
 //DAO객체 준비
-MemberDAO memberDAO = MemberDAO.getinstance();
+MemberDAO memberDAO = MemberDAO.getInstance();
 
 MemberVO memberVO = memberDAO.getMemberById(id);
 

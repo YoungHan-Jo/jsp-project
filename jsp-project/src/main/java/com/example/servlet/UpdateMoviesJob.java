@@ -34,9 +34,9 @@ public class UpdateMoviesJob implements Job {
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 
 		// DAO 객체 준비
-		TodaysRankDAO rankDAO = TodaysRankDAO.getinstance();
-		MovieDAO movieDAO = MovieDAO.getinstance();
-		ScheduledMovieDAO scheduledMovieDAO = ScheduledMovieDAO.getinstance();
+		TodaysRankDAO rankDAO = TodaysRankDAO.getInstance();
+		MovieDAO movieDAO = MovieDAO.getInstance();
+		ScheduledMovieDAO scheduledMovieDAO = ScheduledMovieDAO.getInstance();
 
 		// 크롤링으로 TodaysRank 정보 가져오기
 		lists = crawlingTodaysRank();

@@ -11,7 +11,7 @@ public class ScheduledMovieDAO {
 	// =====================싱글톤 클래스 설계 =========================
 	private static ScheduledMovieDAO instance;
 
-	public static ScheduledMovieDAO getinstance() {
+	public static ScheduledMovieDAO getInstance() {
 		if (instance == null) {
 			instance = new ScheduledMovieDAO();
 		}

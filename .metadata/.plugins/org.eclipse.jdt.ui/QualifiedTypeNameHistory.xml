@@ -3,8 +3,6 @@
     <fullyQualifiedTypeName name="org.jsoup.nodes.Document"/>
     <fullyQualifiedTypeName name="org.jsoup.Jsoup"/>
     <fullyQualifiedTypeName name="java.io.IOException"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="org.jsoup.nodes.Element"/>
     <fullyQualifiedTypeName name="java.util.Iterator"/>
     <fullyQualifiedTypeName name="crawling.CrawlingContent"/>
@@ -23,7 +21,6 @@
     <fullyQualifiedTypeName name="com.example.repository.TodaysRankDAO"/>
     <fullyQualifiedTypeName name="com.example.repository.MovieDAO"/>
     <fullyQualifiedTypeName name="com.example.domain.MovieVO"/>
-    <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="com.example.repository.JdbcUtils"/>
     <fullyQualifiedTypeName name="com.example.domain.TodaysRankVO"/>
@@ -31,12 +28,20 @@
     <fullyQualifiedTypeName name="com.example.domain.ScheduledMovie"/>
     <fullyQualifiedTypeName name="com.example.domain.ScheduledMovieVO"/>
     <fullyQualifiedTypeName name="com.example.repository.ScheduledMovieDAO"/>
-    <fullyQualifiedTypeName name="lombok.Data"/>
-    <fullyQualifiedTypeName name="java.sql.Timestamp"/>
     <fullyQualifiedTypeName name="com.example.domain.MemberVO"/>
     <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
     <fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
     <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
     <fullyQualifiedTypeName name="javax.servlet.http.Cookie"/>
     <fullyQualifiedTypeName name="javax.servlet.annotation.WebFilter"/>
+    <fullyQualifiedTypeName name="java.lang.Math"/>
+    <fullyQualifiedTypeName name="lombok.ToString"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.example.repository.BoardDAO"/>
+    <fullyQualifiedTypeName name="com.example.domain.BoardVO"/>
+    <fullyQualifiedTypeName name="java.sql.Timestamp"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="com.example.domain.Criteria"/>
+    <fullyQualifiedTypeName name="lombok.Data"/>
 </qualifiedTypeNameHistroy>

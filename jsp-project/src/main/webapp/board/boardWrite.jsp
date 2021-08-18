@@ -19,24 +19,17 @@
 			enctype="multipart/form-data">
 			<input type="hidden" name="pageNum" value="" />
 
+			<div class="row"></div>
 			<div class="row">
-				<div class="input-field col s12">
-					<i class="material-icons prefix">account_box</i> <input id="id"
-						type="text" name="id" value="" readonly /> <label for="id">아이디</label>
-				</div>
-			</div>
-			<div class="row">
-				<div class="input-field col s12">
+				<div class="input-field col s12 m2 l1">
 					<select>
-						<option value="" disabled selected>영화 선택</option>
-						<option value="1">Option 1</option>
-						<option value="2">Option 2</option>
-						<option value="3">Option 3</option>
-					</select> <label>영화</label>
+						<option value="" disabled selected>탭 선택</option>
+						<option value="1">리뷰</option>
+						<option value="2">정보</option>
+						<option value="3">잡담</option>
+					</select> <label>탭</label>
 				</div>
-			</div>
-			<div class="row">
-				<div class="input-field">
+				<div class="input-field  col s12 m10 l11">
 					<i class="material-icons prefix">subtitles</i> <input type="text"
 						id="title" class="validate" name="subject" /> <label for="title">제목</label>
 				</div>

@@ -5,7 +5,7 @@
 <%
 String movieNum = request.getParameter("movieNum");
 
-MovieDAO movieDAO = MovieDAO.getinstance();
+MovieDAO movieDAO = MovieDAO.getInstance();
 
 MovieVO movieVO = movieDAO.getMovieByMovieNum(movieNum);
 

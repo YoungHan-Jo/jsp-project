@@ -28,7 +28,7 @@ String id = (String) session.getAttribute("sessionLoginId");
 			</div>
 			<div class="container">
 				<div class="row container">
-					<form class="col s12" action="/member/changePasswdPro.jsp"
+					<form class="col s12 center" action="/member/changePasswdPro.jsp"
 						method="post">
 						<div class="section"><h5>현재 비밀번호</h5></div>
 						<div class="divider"></div>

@@ -8,7 +8,7 @@
 <%
 String id = (String) session.getAttribute("sessionLoginId");
 
-MemberDAO memberDAO = MemberDAO.getinstance();
+MemberDAO memberDAO = MemberDAO.getInstance();
 MemberVO memberVO = memberDAO.getMemberById(id);
 
 // birthday 가져오기
@@ -51,7 +51,6 @@ String gender = memberVO.getGender();
 			</div>
 			<div class="container">
 				<div class="row container">
-
 					<div class="row">
 						<div class="input-field col s12">
 							<i class="material-icons prefix">account_box</i><input id="id"

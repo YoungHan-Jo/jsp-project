@@ -19,7 +19,7 @@ String id = (String) session.getAttribute("sessionLoginId");
 			class="material-icons">menu</i></a>
 		<ul id="nav-mobile" class="right hide-on-med-and-down">
 			<li><a href="sass.html">영화</a></li>
-			<li><a href="badges.html">게시판</a></li>
+			<li><a href="/board/boardList.jsp?tab=&pageNum=1">게시판</a></li>
 
 			<%
 			if (id == null) { // 로그인 되어있지 않음
@@ -69,7 +69,7 @@ String id = (String) session.getAttribute("sessionLoginId");
 	} else { // 로그인 되어있음
 	%>
 	<li>
-		<div class="collapsible-header center">
+		<div class="collapsible-header">
 			<i class="material-icons">account_circle</i><span>내 정보</span>
 		</div>
 		<div class="collapsible-body center">

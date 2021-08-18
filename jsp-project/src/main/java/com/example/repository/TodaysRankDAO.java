@@ -11,7 +11,7 @@ public class TodaysRankDAO {
 	// =====================싱글톤 클래스 설계 =========================
 	private static TodaysRankDAO instance;
 
-	public static TodaysRankDAO getinstance() {
+	public static TodaysRankDAO getInstance() {
 		if (instance == null) {
 			instance = new TodaysRankDAO();
 		}

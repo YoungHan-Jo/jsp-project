@@ -8,7 +8,7 @@
 <jsp:setProperty property="*" name="memberVO" />
 
 <%
-MemberDAO memberDAO = MemberDAO.getinstance();
+MemberDAO memberDAO = MemberDAO.getInstance();
 %>
 
 <%

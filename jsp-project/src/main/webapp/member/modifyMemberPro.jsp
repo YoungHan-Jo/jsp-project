@@ -11,7 +11,7 @@
 <%
 String id = (String) session.getAttribute("sessionLoginId");
 
-MemberDAO memberDAO = MemberDAO.getinstance();
+MemberDAO memberDAO = MemberDAO.getInstance();
 
 MemberVO dbMemberVO = memberDAO.getMemberById(id);
 

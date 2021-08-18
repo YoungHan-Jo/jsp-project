@@ -11,7 +11,7 @@ String newPasswd2 = request.getParameter("newPasswd2");
 
 String id = (String) session.getAttribute("sessionLoginId");
 
-MemberDAO memberDAO = MemberDAO.getinstance();
+MemberDAO memberDAO = MemberDAO.getInstance();
 
 MemberVO memberVO = memberDAO.getMemberById(id);
 

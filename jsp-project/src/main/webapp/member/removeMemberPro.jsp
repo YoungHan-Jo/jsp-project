@@ -7,7 +7,7 @@
 String id = (String) session.getAttribute("sessionLoginId");
 String passwd = request.getParameter("passwd");
 
-MemberDAO memberDAO = MemberDAO.getinstance();
+MemberDAO memberDAO = MemberDAO.getInstance();
 
 MemberVO memberVO = memberDAO.getMemberById(id);
 

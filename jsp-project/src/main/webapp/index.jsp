@@ -11,9 +11,9 @@
 	pageEncoding="UTF-8"%>
 <%
 //DAO객체 준비
-TodaysRankDAO rankDAO = TodaysRankDAO.getinstance();
-MovieDAO movieDAO = MovieDAO.getinstance();
-ScheduledMovieDAO scheduledMovieDAO = ScheduledMovieDAO.getinstance();
+TodaysRankDAO rankDAO = TodaysRankDAO.getInstance();
+MovieDAO movieDAO = MovieDAO.getInstance();
+ScheduledMovieDAO scheduledMovieDAO = ScheduledMovieDAO.getInstance();
 %>
 
 <!DOCTYPE html>
