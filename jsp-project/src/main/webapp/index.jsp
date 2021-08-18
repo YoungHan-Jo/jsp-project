@@ -199,11 +199,13 @@ img.movie-chart {
 			$('#demo-carousel-auto').carousel();
 
 			setInterval(function() {
-
 				$('#demo-carousel-auto').carousel('next');
-
 			}, 3000);
 
+			$(window).resize(function(){
+				location.reload();
+			});
+			
 		});
 	</script>
 </body>
