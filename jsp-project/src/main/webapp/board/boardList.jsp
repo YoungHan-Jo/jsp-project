@@ -22,7 +22,7 @@ if (strPageNum != null) {
 
 //tab 파라미터 가져오기
 String tab = request.getParameter("tab");
-if (tab != null && tab.equals("T")==false) {
+if (tab != null) {
 	cri.setTab(tab);
 }
 
@@ -64,17 +64,18 @@ tr#boardList {
 					<option value="" disabled
 						<%=cri.getTab().equals("") || cri.getTab() == null ? "selected" : ""%>>탭
 						선택</option>
-					<option value="T" <%=tab.equals("T") ? "selected" : ""%>>전체</option>
+					<option value="" <%=cri.getTab().equals("") ? "selected" : ""%>>전체</option>
 					<option value="R" <%=cri.getTab().equals("R") ? "selected" : ""%>>리뷰</option>
 					<option value="I" <%=cri.getTab().equals("I") ? "selected" : ""%>>정보</option>
 					<option value="C" <%=cri.getTab().equals("C") ? "selected" : ""%>>잡담</option>
+					<option value="E" <%=cri.getTab().equals("E") ? "selected" : ""%>>기타</option>
 				</select> <label>Materialize Select</label>
 			</div>
 			<%
 			if (id != null) {
 			%>
 			<div class="col s6 m8 l9">
-				<a href="/board/boardWrite.jsp"
+				<a href="/board/boardWrite.jsp?tab=<%=cri.getTab()%>&pageNum=<%=cri.getPageNum()%>"
 					class="btn waves-effect waves-light right"> <i
 					class="material-icons left">create</i>새글쓰기
 				</a>
@@ -88,20 +89,20 @@ tr#boardList {
 			<table class="highlight">
 				<thead>
 					<tr>
-						<th>No</th>
-						<th>탭</th>
+						<th class="center">No</th>
+						<th class="center">탭</th>
 						<th>글 제목</th>
-						<th>작성자</th>
-						<th>작성일</th>
-						<th>추천수</th>
-						<th>조회수</th>
+						<th class="center">작성자</th>
+						<th class="center">작성일</th>
+						<th class="center">추천수</th>
+						<th class="center">조회수</th>
 					</tr>
 				</thead>
 
 				<tbody>
 
 					<%
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 					String date;
 
 					for (BoardVO boardVO : boardList) {
@@ -109,25 +110,29 @@ tr#boardList {
 					%>
 					<tr id="boardList"
 						onclick="location.href='/board/boardContent.jsp?boardNum=<%=boardVO.getBoardNum()%>&tab=<%=cri.getTab()%>&pageNum=<%=cri.getPageNum()%>'">
-						<td><%=boardVO.getBoardNum()%></td>
-						<td>
+						<td class="center"><%=boardVO.getBoardNum()%></td>
+						<td style="width: 10%" class="center">
 							<%
-							if (boardVO.getTab().equals("R")) {
-							%>리뷰<%
-							} else if (boardVO.getTab().equals("I")) {
-							%>정보<%
-							} else if (boardVO.getTab().equals("C")) {
-							%>잡담<%
-							} else {
-							%>기타<%
-							}
-							%>
+							switch (boardVO.getTab()) {
+								case "R" :
+									%>리뷰<%
+									break;
+								case "I" :
+									%>정보<%
+									break;
+								case "C" :
+									%>잡담<%
+									break;
+								default :
+									%>기타<%
+								}
+								%>
 						</td>
-						<td style="width: 50%"><%=boardVO.getSubject()%></td>
-						<td><%=boardVO.getMemberId()%></td>
-						<td><%=date%></td>
-						<td>추천수</td>
-						<td><%=boardVO.getViewCount()%></td>
+						<td style="width: 40%"><%=boardVO.getSubject()%></td>
+						<td class="center"><%=boardVO.getMemberId()%></td>
+						<td class="center"><%=date%></td>
+						<td class="center">0</td>
+						<td class="center"><%=boardVO.getViewCount()%></td>
 					</tr>
 					<%
 					}

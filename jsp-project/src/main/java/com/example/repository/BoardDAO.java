@@ -154,7 +154,7 @@ public class BoardDAO {
 			String sql = "";
 			sql += "SELECT * ";
 			sql += " FROM board ";
-			sql += " WHERE id = ? ";
+			sql += " WHERE board_num = ? ";
 
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, boardNum);
@@ -354,6 +354,32 @@ public class BoardDAO {
 		}
 
 	} // insert
+	
+	public void updateViewCount(int boardNum) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = JdbcUtils.getConnection();
+
+			String sql = "";
+			sql += "UPDATE board ";
+			sql += " SET view_count = view_count + 1 ";
+			sql += " WHERE board_num = ? ";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, boardNum);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+
+	} // updateViewCount
 
 	
 }

@@ -11,7 +11,7 @@ public class Criteria {
 	
 	private String tab = "";
 	private String type = "";
-	private String keyword = "";
+	private String keyword = "T"; //total 기본값
 	
 	public Criteria() {
 		this(1,10);
