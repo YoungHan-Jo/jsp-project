@@ -22,14 +22,14 @@ if (strPageNum != null) {
 
 //tab 파라미터 가져오기
 String tab = request.getParameter("tab");
-if (tab != null) {
+if (tab != null && tab.equals("T")==false) {
 	cri.setTab(tab);
 }
 
 //DAO 객체준비
 BoardDAO boardDAO = BoardDAO.getInstance();
 
-// board 테이블에서 전체 글 가져오기
+//board 테이블에서 전체 글 가져오기
 List<BoardVO> boardList = boardDAO.getBoards(cri);
 
 // 전체 글(조건에 맞는 글) 개수 가져오기
@@ -61,7 +61,10 @@ tr#boardList {
 		<div class="row">
 			<div class="col s6 m4 l3">
 				<select id="tabs">
-					<option value="" disabled <%=cri.getTab().equals("") || cri.getTab()==null ? "selected" : ""%> >탭 선택</option>
+					<option value="" disabled
+						<%=cri.getTab().equals("") || cri.getTab() == null ? "selected" : ""%>>탭
+						선택</option>
+					<option value="T" <%=tab.equals("T") ? "selected" : ""%>>전체</option>
 					<option value="R" <%=cri.getTab().equals("R") ? "selected" : ""%>>리뷰</option>
 					<option value="I" <%=cri.getTab().equals("I") ? "selected" : ""%>>정보</option>
 					<option value="C" <%=cri.getTab().equals("C") ? "selected" : ""%>>잡담</option>
