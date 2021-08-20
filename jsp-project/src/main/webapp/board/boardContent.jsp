@@ -1,3 +1,6 @@
+<%@page import="com.example.domain.AttachVO"%>
+<%@page import="java.util.List"%>
+<%@page import="com.example.repository.AttachDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="com.example.domain.BoardVO"%>
@@ -24,6 +27,10 @@ BoardVO boardVO = boardDAO.getBoardByBoardNum(boardNum);
 Date date = boardVO.getRegDate();
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 String regDate = sdf.format(date);
+
+// 첨부파일 가져오기
+AttachDAO attachDAO = AttachDAO.getInstance();
+List<AttachVO> attachList = attachDAO.getAttachesByBoardNum(boardNum);
 %>
 <!DOCTYPE html>
 <html>
@@ -83,7 +90,47 @@ String regDate = sdf.format(date);
 				</tr>
 				<tr>
 					<th>첨부파일</th>
-					<td></td>
+					<td>
+						<%
+						if (attachList.size() > 0) { // 첨부파일이 있으면
+						%>
+						<ul>
+							<%
+							for (AttachVO attach : attachList) {
+								if (attach.getFileType().equals("I")) { // 이미지 파일
+									// 썸네일 이미지 경로
+	                   				String fileCallPath = attach.getUploadPath() + "/s_" + attach.getFileName();
+	                   				// 원본 이미지 경로
+	                   				String fileCallPathOrigin = attach.getUploadPath() + "/" + attach.getFileName();
+	                   				%>
+	                   				<li>
+	                   					<a href="/board/download.jsp?fileName=<%=fileCallPathOrigin %>">
+	                   						<img src="/board/display.jsp?fileName=<%=fileCallPath%>">
+	                   					</a>
+	                   				</li>
+	                   				<%
+									
+								} else {// 일반파일
+									String fileCallPath = attach.getUploadPath() + "/" + attach.getFileName();
+									%>
+									<li><a
+										href="/board/download.jsp?fileName=<%=fileCallPath%>"> <i
+										class="material-icons">file_present</i> <%=attach.getFileName()%>
+									</a></li>
+									<%
+								}
+		
+							}
+								%>
+						</ul> 
+						<%
+						 }else {
+							 %>
+							 첨부파일 없음
+							 <%
+						 }
+						 %>
+					</td>
 				</tr>
 			</table>
 		</div>

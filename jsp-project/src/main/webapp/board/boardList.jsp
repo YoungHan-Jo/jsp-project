@@ -46,6 +46,10 @@ PageDTO pageDTO = new PageDTO(cri, totalCount);
 tr#boardList {
 	cursor: pointer;
 }
+a{
+	text-decoration: none;
+	color: black;
+}
 </style>
 </head>
 <body class="brown lighten-4">
@@ -55,7 +59,7 @@ tr#boardList {
 
 	<div class="container">
 		<div class="section">
-			<h4>게시판</h4>
+			<h4><a href="/board/boardList.jsp?tab=&pageNum=1">게시판</a></h4>
 			<hr />
 		</div>
 		<div class="row">

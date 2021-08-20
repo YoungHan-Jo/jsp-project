@@ -61,8 +61,20 @@
 			<artifactId>cos</artifactId>
 			<version>09May2002</version>
 		</dependency>
-
-
+		
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.14</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
@@ -72,9 +84,6 @@
 		</dependency>
 
 	</dependencies>
-
-
-
 
 	<build>
 		<plugins>
