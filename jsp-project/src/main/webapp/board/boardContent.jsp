@@ -106,7 +106,9 @@ List<AttachVO> attachList = attachDAO.getAttachesByBoardNum(boardNum);
 	                   				<li>
 	                   					<a href="/board/download.jsp?fileName=<%=fileCallPathOrigin %>">
 	                   						<img src="/board/display.jsp?fileName=<%=fileCallPath%>">
+	                   						<%=attach.getFileName() %>
 	                   					</a>
+	                   					<hr>
 	                   				</li>
 	                   				<%
 									
@@ -116,7 +118,10 @@ List<AttachVO> attachList = attachDAO.getAttachesByBoardNum(boardNum);
 									<li><a
 										href="/board/download.jsp?fileName=<%=fileCallPath%>"> <i
 										class="material-icons">file_present</i> <%=attach.getFileName()%>
-									</a></li>
+									</a>
+									<hr>
+									</li>
+										
 									<%
 								}
 		
