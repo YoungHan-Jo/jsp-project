@@ -55,7 +55,7 @@ public class BoardDAO {
 
 			String sql = "";
 			sql += "DELETE FROM board ";
-			sql += " WHERE id = ? ";
+			sql += " WHERE board_num = ? ";
 
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, boardNum);

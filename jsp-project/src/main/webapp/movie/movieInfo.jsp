@@ -1,15 +1,38 @@
+<%@page import="com.example.domain.ReviewVO"%>
+<%@page import="java.util.List"%>
+<%@page import="com.example.repository.ReviewDAO"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.example.repository.MovieDAO"%>
 <%@page import="com.example.domain.MovieVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <%
+String id = (String)session.getAttribute("sessionLoginId");
+
+%>
+<%
+// 파라미터값 가져오기
 String movieNum = request.getParameter("movieNum");
 
+// ====영화정보 가져오기====
 MovieDAO movieDAO = MovieDAO.getInstance();
-
 MovieVO movieVO = movieDAO.getMovieByMovieNum(movieNum);
-
 String releaseYear = movieVO.getReleaseDate().substring(0, 4);
+
+// ==== 평균 평점 ====
+ReviewDAO reviewDAO = ReviewDAO.getInstance();
+Double avgStar = reviewDAO.getAvgStarByMovieNum(movieNum);
+avgStar = (double) Math.round(avgStar*100.0) / 100.0;
+
+int reviewCount = reviewDAO.getCountByMovieNum(movieNum);
+
+System.out.println("평점 : " + avgStar);
+System.out.println("리뷰 수 : " + reviewCount);
+
+// ==== 한줄 평 리스트 가져오기 ====
+List<ReviewVO> reviewList = reviewDAO.getReviewsByMovieNum(movieNum);
+
 
 %>
 <!DOCTYPE html>
@@ -26,6 +49,20 @@ img.movie-info {
 }
 .box-image {
   margin-top: 30px;
+}
+
+.delete,
+#releaseYear {
+	opacity: 0.7;
+}
+
+.avgStar{
+	font-size: 25px;
+	font-weight: 100;
+}
+
+.review-count{
+	opacity: 0.7;
 }
 
 </style>
@@ -49,8 +86,9 @@ img.movie-info {
 				<div class="movie-story-area col l9 m8 s12">
 					<div class="section movie-story-title">
 						<h4 class="title"><%=movieVO.getMovieTitle() %></h4>
-						&nbsp;&nbsp;<span><%=releaseYear %></span>
+						&nbsp;&nbsp;<span id="releaseYear"><%=releaseYear %></span>
 					</div>
+					
 					<div class="divider grey lighten-1"></div>
 					<div class="section">
 						<div class="movie-story">
@@ -62,11 +100,12 @@ img.movie-info {
 		</div>
 		<hr />
 		<div class="section astimation-area">
-			<h5>한 줄 평</h5>
+			<h5>한 줄 리뷰</h5>
+			
 			<div class="row">
-				<form class="col s12">
+				<form action="/movie/movieInfoPro.jsp?movieNum=<%=movieVO.getMovieNum() %>" method="POST">
 					<div class="input-field col s12 m3 l2">
-						<select>
+						<select name="star">
 							<option value="" disabled selected>평점</option>
 							<option value="5">★★★★★</option>
 							<option value="4">★★★★☆</option>
@@ -77,39 +116,64 @@ img.movie-info {
 					</div>
 
 					<div class="input-field col s12 m9 l10">
-						<textarea id="textarea1" class="materialize-textarea"></textarea>
-						<label for="textarea1">한 줄 평 쓰기</label>
+						<textarea id="content" name="content" class="materialize-textarea"></textarea>
+						<label for="textarea1">한 줄 리뷰 쓰기</label>
 					</div>
 					<button type="submit" class="waves-effect waves-light btn">
 						쓰기</button>
 				</form>
 			</div>
+			<div class="section star">
+						<span class="avgStar">평점 : ★★★★★ <%=avgStar %> / </span><span>5.0</span><span class="review-count"> (<%=reviewCount %>개)</span>
+					</div>
 			<div>
-				<table>
+				<table class="review">
 					<thead>
 						<tr>
 							<th>작성자</th>
 							<th>평점</th>
-							<th>한 줄 평</th>
+							<th>한 줄 리뷰</th>
 						</tr>
 					</thead>
 
 					<tbody>
-						<tr>
-							<td>Alvin</td>
-							<td>★★★★☆</td>
-							<td>dddddddddddddddddddddddddddddddddddd</td>
-						</tr>
-						<tr>
-							<td>Alan</td>
-							<td>★★★★★</td>
-							<td>ssssssssssssss</td>
-						</tr>
-						<tr>
-							<td>Jonathan</td>
-							<td>★★★☆☆</td>
-							<td>xxxxxxxxxxxxx</td>
-						</tr>
+						
+						<%
+						for(ReviewVO reviewVO :reviewList){
+							%>
+							<tr id="<%=reviewVO.getReviewNum() %>">
+								<td style="width: 10%"><%=reviewVO.getId() %></td>
+								<td style="width: 15%">
+									<%
+									switch(reviewVO.getStar()){
+										case "1" :
+											%>★☆☆☆☆<%
+											break;
+										case "2" :
+											%>★★☆☆☆<%
+											break;
+										case "3" :
+											%>★★★☆☆<%
+											break;
+										case "4" :
+											%>★★★★☆<%
+											break;
+										case "5" :
+											%>★★★★★<%
+											break;
+									}
+									%>
+								</td>
+								<td style="width: 50%"><%=reviewVO.getReviewContent() %></td>
+								<%
+								if(reviewVO.getId().equals(id) == true){
+									%><td class="right delete"><a id="btn-delete" class="waves-effect waves-light btn">삭제</a></td><%	
+								}
+								%>
+							</tr>
+							<%
+						}//for
+						%>
 					</tbody>
 				</table>
 			</div>
@@ -119,6 +183,12 @@ img.movie-info {
 	<!-- footer area -->
 	<jsp:include page="/include/footer.jsp" />
 	<!-- end of footer -->
-	<script></script>
+	<script>
+	$('table.review').on('click','#btn-delete',function(){
+		var reviewNum = $(this).closest('tr')[0].id;
+		
+		location.href=`/movie/deleteReview.jsp?reviewNum=\${reviewNum}&movieNum=<%=movieNum %>`;
+	});
+	</script>
 </body>
 </html>
