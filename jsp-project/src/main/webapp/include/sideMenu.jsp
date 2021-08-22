@@ -18,7 +18,7 @@ a {
 		<li class="collection-item hover lighten-3"><a
 			href="/member/myInfo.jsp">내 정보 보기</a></li>
 		<li class="collection-item hover lighten-3"><a
-			href="/member/myInfo.jsp">내가 쓴 글</a></li>
+			href="/member/myHistory.jsp">내가 쓴 글</a></li>
 		<li class="collection-item hover lighten-3"><a
 			href="/member/modifyMember.jsp">회원정보 수정</a></li>
 		<li class="collection-item hover lighten-3"><a

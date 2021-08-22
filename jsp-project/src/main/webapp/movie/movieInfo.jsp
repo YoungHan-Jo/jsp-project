@@ -124,8 +124,23 @@ img.movie-info {
 				</form>
 			</div>
 			<div class="section star">
-						<span class="avgStar">평점 : ★★★★★ <%=avgStar %> / </span><span>5.0</span><span class="review-count"> (<%=reviewCount %>개)</span>
-					</div>
+						<span class="avgStar">평점 : <%if(avgStar >= 5){
+														%>
+														★★★★★
+														<%
+														}else if(avgStar >= 4){
+														%>★★★★☆<%	
+														}else if(avgStar >= 3){
+														%>★★★☆☆<%	
+														}else if(avgStar >= 2){
+														%>★★☆☆☆<%	
+														}else if(avgStar >= 1){
+														%>★☆☆☆☆<%	
+														}else if(avgStar >= 0){
+														%>☆☆☆☆☆<%	
+														}%><%=avgStar %> / </span>
+					<span>5.0</span><span class="review-count"> (<%=reviewCount %>개)</span>								
+			</div>
 			<div>
 				<table class="review">
 					<thead>
@@ -135,44 +150,52 @@ img.movie-info {
 							<th>한 줄 리뷰</th>
 						</tr>
 					</thead>
-
 					<tbody>
-						
 						<%
-						for(ReviewVO reviewVO :reviewList){
-							%>
-							<tr id="<%=reviewVO.getReviewNum() %>">
-								<td style="width: 10%"><%=reviewVO.getId() %></td>
-								<td style="width: 15%">
+						System.out.println(reviewList.size());
+						
+						if(reviewList.size()>0){ // 리뷰가 있을 때
+							for(ReviewVO reviewVO :reviewList){
+								%>
+								<tr id="<%=reviewVO.getReviewNum() %>">
+									<td style="width: 10%"><%=reviewVO.getId() %></td>
+									<td style="width: 15%">
+										<%
+										switch(reviewVO.getStar()){
+											case "1" :
+												%>★☆☆☆☆<%
+												break;
+											case "2" :
+												%>★★☆☆☆<%
+												break;
+											case "3" :
+												%>★★★☆☆<%
+												break;
+											case "4" :
+												%>★★★★☆<%
+												break;
+											case "5" :
+												%>★★★★★<%
+												break;
+										}
+										%>
+									</td>
+									<td style="width: 50%"><%=reviewVO.getReviewContent() %></td>
 									<%
-									switch(reviewVO.getStar()){
-										case "1" :
-											%>★☆☆☆☆<%
-											break;
-										case "2" :
-											%>★★☆☆☆<%
-											break;
-										case "3" :
-											%>★★★☆☆<%
-											break;
-										case "4" :
-											%>★★★★☆<%
-											break;
-										case "5" :
-											%>★★★★★<%
-											break;
+									if(reviewVO.getId().equals(id) == true){
+										%><td class="right delete"><a id="btn-delete" class="waves-effect waves-light btn">삭제</a></td><%	
 									}
 									%>
-								</td>
-								<td style="width: 50%"><%=reviewVO.getReviewContent() %></td>
+								</tr>
 								<%
-								if(reviewVO.getId().equals(id) == true){
-									%><td class="right delete"><a id="btn-delete" class="waves-effect waves-light btn">삭제</a></td><%	
-								}
-								%>
+							}//for
+						}else{ // 리뷰가 없을 때
+							%>
+							<tr>
+								<td colspan="4" class="center">리뷰가 존재하지 않습니다.</td>
 							</tr>
-							<%
-						}//for
+							<%	
+						}
 						%>
 					</tbody>
 				</table>

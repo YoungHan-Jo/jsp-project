@@ -289,6 +289,53 @@ public class BoardDAO {
 		return list;
 	} // getBoards
 	
+	public List<BoardVO> getBoardsByMemberId(String id) {
+
+		List<BoardVO> list = new ArrayList<>();
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = JdbcUtils.getConnection();
+
+			String sql = "";
+			sql += "SELECT * ";
+			sql += " FROM board ";
+			sql += " WHERE member_id = ? ";
+			sql += " ORDER BY reg_date DESC ";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardVO boardVO = new BoardVO();
+				boardVO.setBoardNum(rs.getInt("board_num"));
+				boardVO.setTab(rs.getString("tab"));
+				boardVO.setMemberId(rs.getString("member_id"));
+				boardVO.setSubject(rs.getString("subject"));
+				boardVO.setContent(rs.getString("content"));
+				boardVO.setViewCount(rs.getInt("view_count"));
+				boardVO.setRegDate(rs.getTimestamp("reg_date"));
+				boardVO.setReRef(rs.getInt("re_ref"));
+				boardVO.setReLev(rs.getInt("re_lev"));
+				boardVO.setReSeq(rs.getInt("re_seq"));
+				
+				list.add(boardVO);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+
+		return list;
+	} // getBoardsByMemberId
+	
 	// 새글로 정할 글 번호
 	public int getNextNum() {
 		int num = 0;

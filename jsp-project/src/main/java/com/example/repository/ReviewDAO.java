@@ -218,7 +218,7 @@ public class ReviewDAO {
 	} // getReviewsByMovieNum
 	
 	//id별 리뷰 가져오기
-	public List<ReviewVO> getReviewsByid(String id) {
+	public List<ReviewVO> getReviewsByMemberId(String id) {
 
 		List<ReviewVO> list = new ArrayList<>();
 
@@ -233,7 +233,7 @@ public class ReviewDAO {
 			sql += "SELECT * ";
 			sql += " FROM review ";
 			sql += " WHERE id = ? ";
-			sql += " ORDER BY review_num ";
+			sql += " ORDER BY review_num DESC ";
 
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -258,7 +258,7 @@ public class ReviewDAO {
 		}
 
 		return list;
-	} // getReviewsByMovieNum
+	} // getReviewsByMemberId
 	
 	// 새 한줄평에 설정할 글 번호
 	public int getNextNum() {
