@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.domain.BoardVO;
-import com.example.domain.Criteria;
 import com.example.domain.ReviewVO;
 
 

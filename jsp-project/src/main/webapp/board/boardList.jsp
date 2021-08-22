@@ -151,7 +151,7 @@ a{
 				if (pageDTO.isPrev()) {
 				%>
 				<li class="waves-effect"><a
-					href="/board/boardList.jsp?pageNum=<%=pageDTO.getStartPage() - 1%>">
+					href="/board/boardList.jsp?tab=<%=cri.getTab() %>&pageNum=<%=pageDTO.getStartPage() - 1%>">
 						<i class="material-icons">chevron_left</i>
 				</a></li>
 				<%
@@ -173,7 +173,7 @@ a{
 				if (pageDTO.isNext()) {
 				%>
 				<li class="waves-effect"><a
-					href="/board/boardList.jsp?pageNum=<%=pageDTO.getEndPage() + 1%>">
+					href="/board/boardList.jsp?tab=<%=cri.getTab() %>&pageNum=<%=pageDTO.getEndPage() + 1%>">
 						<i class="material-icons">chevron_right</i>
 				</a></li>
 				<%

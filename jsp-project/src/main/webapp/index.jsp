@@ -122,7 +122,7 @@ img.movie-chart {
 
 								String releaseDate = toString.format(date);
 							%>
-							<div class="carousel-item" href="#one!">
+							<div class="carousel-item">
 								<div class="box-image center">
 									<a href="/movie/movieInfo.jsp?movieNum=<%=movieNum%>"><img
 										class="movie-chart" src="<%=movieVO.getThumbnail()%>" alt="" /></a>
