@@ -146,7 +146,7 @@ List<AttachVO> attachList = attachDAO.getAttachesByBoardNum(boardNum);
 					if (boardVO.getMemberId().equals(id)) {
 					%>
 					<a class="btn waves-effect waves-light"
-						href="/board/boardModify.jsp?num=&pageNum="> <i
+						href="/board/modifyBoard.jsp?boardNum=<%=boardVO.getBoardNum() %>&pageNum=<%=pageNum%>"> <i
 						class="material-icons left">edit</i>글수정
 					</a> <a class="btn waves-effect waves-light" onclick="remove(event)">
 						<i class="material-icons left">delete</i>글삭제
@@ -170,5 +170,16 @@ List<AttachVO> attachList = attachDAO.getAttachesByBoardNum(boardNum);
 	<!-- footer area -->
 	<jsp:include page="/include/footer.jsp" />
 	<!-- end of footer -->
+	<script>
+	function remove(event){
+		event.preventDefault();
+		
+		const isRemove = confirm('게시글을 삭제하시겠습니까?');
+		if(isRemove == true){
+			location.href = '/board/deleteBoard.jsp?boardNum=<%=boardVO.getBoardNum() %>';
+		}
+		
+	}
+	</script>
 </body>
 </html>

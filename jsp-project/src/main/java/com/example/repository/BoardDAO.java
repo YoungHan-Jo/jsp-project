@@ -46,7 +46,7 @@ public class BoardDAO {
 
 	} // deleteAll
 	
-	public void deleteByBoardNum(String boardNum) {
+	public void deleteByBoardNum(int boardNum) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -58,7 +58,7 @@ public class BoardDAO {
 			sql += " WHERE board_num = ? ";
 
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, boardNum);
+			pstmt.setInt(1, boardNum);
 
 			pstmt.executeUpdate();
 

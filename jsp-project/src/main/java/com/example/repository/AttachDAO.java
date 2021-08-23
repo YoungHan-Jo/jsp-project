@@ -43,6 +43,30 @@ public class AttachDAO {
 		}
 
 	} // deleteAll
+	
+	public void deleteAttachesByBoardNum(int boardNum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = JdbcUtils.getConnection();
+
+			String sql = "";
+			sql += "DELETE FROM attach ";
+			sql += " WHERE board_num = ? ";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, boardNum);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+
+	} // deleteAttachesByBoardNum
 
 	public int getCountAll() {
 
