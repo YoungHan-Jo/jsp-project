@@ -67,6 +67,30 @@ public class AttachDAO {
 		}
 
 	} // deleteAttachesByBoardNum
+	
+	public void deleteAttachesByUuid(String uuid) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = JdbcUtils.getConnection();
+
+			String sql = "";
+			sql += "DELETE FROM attach ";
+			sql += " WHERE uuid = ? ";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, uuid);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+
+	} // deleteAttachesByUuid
 
 	public int getCountAll() {
 
@@ -168,5 +192,44 @@ public class AttachDAO {
 		
 		return list;
 	} //getAttachesByBoardNum
+	
+	public AttachVO getAttachByUuid(String uuid) {
+
+		AttachVO attachVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = JdbcUtils.getConnection();
+
+			String sql = "";
+			sql += "SELECT * ";
+			sql += " FROM attach ";
+			sql += " WHERE uuid = ? ";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, uuid);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				attachVO = new AttachVO();
+				attachVO.setUuid(rs.getString("uuid"));
+				attachVO.setUploadPath(rs.getString("upload_path"));
+				attachVO.setFileName(rs.getString("file_name"));
+				attachVO.setFileType(rs.getString("file_type"));
+				attachVO.setBoardNum(rs.getInt("board_num"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+
+		return attachVO;
+	} // getCountAll
 
 }

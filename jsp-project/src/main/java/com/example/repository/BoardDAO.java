@@ -400,7 +400,36 @@ public class BoardDAO {
 			JdbcUtils.close(con, pstmt);
 		}
 
-	} // insert
+	} // addBoard
+	
+	public void updateBoard(BoardVO boardVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = JdbcUtils.getConnection();
+
+			String sql = "";
+			sql += "UPDATE board ";
+			sql += " SET tab = ? ,subject = ?, content = ? ";
+			sql += " WHERE board_num = ? ";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, boardVO.getTab());
+			pstmt.setString(2, boardVO.getSubject());
+			pstmt.setString(3, boardVO.getContent());
+			pstmt.setInt(4, boardVO.getBoardNum());
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+
+	} // addBoard
 	
 	public void updateViewCount(int boardNum) {
 

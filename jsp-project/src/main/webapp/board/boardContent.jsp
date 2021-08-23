@@ -146,7 +146,7 @@ List<AttachVO> attachList = attachDAO.getAttachesByBoardNum(boardNum);
 					if (boardVO.getMemberId().equals(id)) {
 					%>
 					<a class="btn waves-effect waves-light"
-						href="/board/modifyBoard.jsp?boardNum=<%=boardVO.getBoardNum() %>&pageNum=<%=pageNum%>"> <i
+						href="/board/modifyBoard.jsp?boardNum=<%=boardVO.getBoardNum() %>&tab=<%=tab %>&pageNum=<%=pageNum%>"> <i
 						class="material-icons left">edit</i>글수정
 					</a> <a class="btn waves-effect waves-light" onclick="remove(event)">
 						<i class="material-icons left">delete</i>글삭제
