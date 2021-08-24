@@ -12,6 +12,12 @@ String pageNum = "1";
 if(request.getParameter("pageNum") != null){
 	pageNum = request.getParameter("pageNum");
 }
+
+int reRef = Integer.parseInt(request.getParameter("reRef"));
+int reLev = Integer.parseInt(request.getParameter("reLev"));
+int reSeq = Integer.parseInt(request.getParameter("reSeq"));
+
+
 %>
 <!DOCTYPE html>
 <html>
@@ -25,11 +31,14 @@ if(request.getParameter("pageNum") != null){
 
 	<div class="container">
 		<div class="section">
-			<h4>게시판 새글 쓰기</h4>
+			<h4>게시판 답글 쓰기</h4>
 			<hr />
 		</div>
-		<form action="/board/boardWritePro.jsp" method="POST" enctype="multipart/form-data">
+		<form action="/board/replyWritePro.jsp" method="POST" enctype="multipart/form-data">
 			<input type="hidden" name="pageNum" value="<%=pageNum%>" />
+			<input type="hidden" name="reRef" value="<%=reRef%>" />
+			<input type="hidden" name="reLev" value="<%=reLev%>" />
+			<input type="hidden" name="reSeq" value="<%=reSeq%>" />
 
 			<div class="row"></div>
 			<div class="row">
@@ -76,7 +85,7 @@ if(request.getParameter("pageNum") != null){
 			<br />
 			<div class="row center">
 				<button class="btn waves-effect waves-light" type="submit">
-					새글등록 <i class="material-icons right">create</i>
+					답글등록 <i class="material-icons right">create</i>
 				</button>
 				&nbsp;&nbsp;
 				<button class="btn waves-effect waves-light" type="reset">

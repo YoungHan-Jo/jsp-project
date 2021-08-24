@@ -50,6 +50,9 @@ a{
 	text-decoration: none;
 	color: black;
 }
+.reply-level{
+	display: inline-block;
+}
 </style>
 </head>
 <body class="brown lighten-4">
@@ -132,7 +135,17 @@ a{
 								}
 								%>
 						</td>
-						<td style="width: 40%"><%=boardVO.getSubject()%></td>
+						<td style="width: 40%">
+						<%
+						if(boardVO.getReLev() > 0){ // 답글이면
+							%>
+							<span class="reply-level" style="width: <%=boardVO.getReLev()*15 %>px"></span>
+							<i class="material-icons">subdirectory_arrow_right</i>	
+							<%
+						}
+						%>
+						
+						<%=boardVO.getSubject()%></td>
 						<td class="center"><%=boardVO.getMemberId()%></td>
 						<td class="center"><%=date%></td>
 						<td class="center">0</td>

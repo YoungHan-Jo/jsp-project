@@ -156,7 +156,7 @@ List<AttachVO> attachList = attachDAO.getAttachesByBoardNum(boardNum);
 					%>
 
 					<a class="btn waves-effect waves-light"
-						href="/board/replyWrite.jsp?reRef=&reLev=&reSeq=&pageNum="> <i
+						href="/board/replyWrite.jsp?tab=<%=boardVO.getTab() %>&reRef=<%=boardVO.getReRef() %>&reLev=<%=boardVO.getReLev() %>&reSeq=<%=boardVO.getReSeq() %>&pageNum=<%=pageNum %>"> <i
 						class="material-icons left">reply</i>답글
 					</a> <a class="btn waves-effect waves-light"
 						href="/board/boardList.jsp?tab=<%=tab%>&pageNum=<%=pageNum%>">
