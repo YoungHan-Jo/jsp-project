@@ -9842,3 +9842,15 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2021-08-26 01:26:04.977
 !MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-08-26 01:40:22.767
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.iVfIWLrJ
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-08-26 01:40:22.768
+!MESSAGE unsubscribing from classpath changes: sts4.classpath.iVfIWLrJ
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-08-26 01:40:22.769
+!MESSAGE subsribers = {}
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-08-26 01:40:22.770
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.iVfIWLrJ => OK
