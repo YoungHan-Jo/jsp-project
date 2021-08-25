@@ -454,7 +454,7 @@ public class BoardDAO {
 
 	} // updateViewCount
 
-	public void updqteReSeqAndAddReply(BoardVO boardVO) {
+	public void updateReSeqAndAddReply(BoardVO boardVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -515,6 +515,6 @@ public class BoardDAO {
 			JdbcUtils.close(con, pstmt);
 		}
 
-	} // updqteReSeqAndAddReply
+	} // updateReSeqAndAddReply
 
 }
