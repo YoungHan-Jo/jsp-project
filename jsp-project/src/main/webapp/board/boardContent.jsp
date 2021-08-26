@@ -36,6 +36,18 @@ List<AttachVO> attachList = attachDAO.getAttachesByBoardNum(boardNum);
 <html>
 <head>
 <jsp:include page="/include/head.jsp" />
+<style>
+#rec-count {
+	display: inline-block;
+	width: 20%;
+	padding: 15px;
+	font-size: 30px;
+	background-color: #f06292;
+	border-radius: 5px;
+	color: white;
+	
+}
+</style>
 </head>
 <body class="brown lighten-4">
 
@@ -138,6 +150,15 @@ List<AttachVO> attachList = attachDAO.getAttachesByBoardNum(boardNum);
 					</td>
 				</tr>
 			</table>
+		</div>
+		<div class="section">
+		<div class="row center"	>
+				<span id="rec-count">0</span>
+			</div>
+			<div class="row center"	>
+				<a class="waves-effect waves-light btn pink lighten-2">
+				<i class="material-icons left">favorite_border</i>좋아요</a>
+			</div>
 		</div>
 		<div class="section">
 			<div class="row">
