@@ -1,8 +1,10 @@
 package com.example.restapi;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -47,9 +49,11 @@ public class RecommendRestServlet extends HttpServlet {
 		System.out.println("boardNum : " + boardNum);
 
 		int count = recDAO.getCountByBoard(Integer.parseInt(boardNum));
+		List<String> list = recDAO.getAccountsByBoardNum(Integer.parseInt(boardNum));
 
 		Map<String, Object> map = new HashMap<>();
-		map.put("count", map);
+		map.put("count", count);
+		map.put("list", list);
 
 		strJson = gson.toJson(map);
 
@@ -61,6 +65,32 @@ public class RecommendRestServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		// application/json 형식의 데이터를 받을때
+		// HTTP 메시지 바디를 직접 읽어와야 함
+		BufferedReader reader = request.getReader();
+
+		// HTTP 메시지 바디 영역으로부터 JSON 문자열 읽어오기
+		String strJson = readMessageBody(reader);
+		System.out.println("JSON 문자열 : " + strJson);
+
+		// JSON 문자열 -> 자바객체로 변환 (역직렬화)
+		RecommendVO recVO = gson.fromJson(strJson, RecommendVO.class);
+		System.out.println(recVO);
+
+		// insert 회원등록하기
+		recDAO.addRecommend(recVO);
+
+		// 응답 데이터 준비
+		Map<String, Object> map = new HashMap<>();
+		map.put("result", "success");
+		map.put("recVO", recVO);
+
+		// 자바객체 -> JSON 문자열로 변환 (직렬화)
+		String strResponse = gson.toJson(map); // {}
+
+		// 클라이언트 쪽으로 출력하기
+		sendResponse(response, strResponse);
+
 	} // doPost
 
 	@Override
@@ -68,6 +98,17 @@ public class RecommendRestServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 	} // doDelete
+
+	private String readMessageBody(BufferedReader reader) throws IOException {
+
+		StringBuilder sb = new StringBuilder();
+		String line = "";
+		while ((line = reader.readLine()) != null) {
+			sb.append(line);
+		} // while
+
+		return sb.toString();
+	} // readMessageBody
 
 	private void sendResponse(HttpServletResponse response, String json) throws IOException {
 		response.setContentType("application/json; charset=UTF-8");

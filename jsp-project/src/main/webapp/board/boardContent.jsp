@@ -1,3 +1,5 @@
+<%@page import="com.example.domain.RecommendVO"%>
+<%@page import="com.example.repository.RecommendDAO"%>
 <%@page import="com.example.domain.AttachVO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.example.repository.AttachDAO"%>
@@ -31,22 +33,27 @@ String regDate = sdf.format(date);
 // 첨부파일 가져오기
 AttachDAO attachDAO = AttachDAO.getInstance();
 List<AttachVO> attachList = attachDAO.getAttachesByBoardNum(boardNum);
+
+//======== 추천기능 =========
+RecommendDAO recDAO = RecommendDAO.getInstance();
+int recCount = recDAO.getCountByBoard(boardNum);
+
+RecommendVO recVO = new RecommendVO();
+recVO.setBoardNum(boardNum);
+recVO.setId(id);
+
+boolean isRec = recDAO.isRecommendedByRecVO(recVO);
+
+List<String> list = recDAO.getAccountsByBoardNum(boardNum);
+
+
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <jsp:include page="/include/head.jsp" />
 <style>
-#rec-count {
-	display: inline-block;
-	width: 20%;
-	padding: 15px;
-	font-size: 30px;
-	background-color: #f06292;
-	border-radius: 5px;
-	color: white;
-	
-}
+
 </style>
 </head>
 <body class="brown lighten-4">
@@ -95,7 +102,7 @@ List<AttachVO> attachList = attachDAO.getAttachesByBoardNum(boardNum);
 					<th>조회수</th>
 					<td><%=boardVO.getViewCount()%></td>
 					<th>추천수</th>
-					<td>0</td>
+					<td class="likey-count"><%=recCount %></td>
 				</tr>
 				<tr id="content">
 					<td><pre><%=boardVO.getContent()%></pre></td>
@@ -152,12 +159,20 @@ List<AttachVO> attachList = attachDAO.getAttachesByBoardNum(boardNum);
 			</table>
 		</div>
 		<div class="section">
-		<div class="row center"	>
-				<span id="rec-count">0</span>
-			</div>
 			<div class="row center"	>
-				<a class="waves-effect waves-light btn pink lighten-2">
-				<i class="material-icons left">favorite_border</i>좋아요</a>
+				<form action="" id="likey-form">
+				<input type="hidden" name="boardNum" value="<%=boardNum %>">
+				<input type="hidden" name="id" value="<%=id %>">
+				<a class="waves-effect waves-light btn pink lighten-2" id="btn-likey">
+				<%
+				if(isRec == true){
+				%><i class="material-icons left">favorite</i><%	
+				}else{
+				%><i class="material-icons left">favorite_border</i><%
+				}
+				%>
+				<span class="likey-count"><%=recCount %></span></a>
+				</form>
 			</div>
 		</div>
 		<div class="section">
@@ -201,6 +216,58 @@ List<AttachVO> attachList = attachDAO.getAttachesByBoardNum(boardNum);
 		}
 		
 	}
+	
+	$('#btn-likey').on('click',function(){
+		var obj = {
+				boardNum: $('input[name="boardNum"]').val(),
+				id: $('input[name="id"]').val()
+		}; 
+		
+		console.log(obj);
+		console.log(typeof obj);
+		
+		console.log(obj.id);
+		
+		if(obj.id == 'null'){
+			alert('로그인이 필요한 서비스 입니다.');
+		}else{
+			var strJson = JSON.stringify(obj);
+			console.log(strJson);
+			console.log(typeof strJson);
+			
+			// ajax 함수 호출
+			$.ajax({
+				url: '/api/recommend',
+				method: 'POST',
+				data: strJson,
+				contentType: 'application/json; charset=UTF-8',
+				success: function (data) {
+					
+					$.ajax({
+						url : '/api/recommend/'+ <%=boardNum %>,
+						method : 'GET',
+						success : function(data){
+							console.log(data);
+							console.log(typeof data);
+							console.log(data.count);
+							$('.likey-count').text(data.count);
+							
+						}
+						
+					});
+				}
+			});
+		}
+		
+		
+		
+	});
+	
+	
+	
+	
+	
+	
 	</script>
 </body>
 </html>

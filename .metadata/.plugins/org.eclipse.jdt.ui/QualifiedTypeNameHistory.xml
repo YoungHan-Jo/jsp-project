@@ -39,9 +39,7 @@
     <fullyQualifiedTypeName name="java.sql.Timestamp"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="com.example.domain.Criteria"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="com.example.domain.AttachVO"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="com.example.domain.ReviewVO"/>
     <fullyQualifiedTypeName name="javax.servlet.http.HttpServlet"/>
     <fullyQualifiedTypeName name="javax.servlet.annotation.WebServlet"/>
@@ -52,4 +50,7 @@
     <fullyQualifiedTypeName name="com.google.gson.GsonBuilder"/>
     <fullyQualifiedTypeName name="com.example.domain.RecommendVO"/>
     <fullyQualifiedTypeName name="com.example.util.RecommendDeserializer"/>
+    <fullyQualifiedTypeName name="java.io.BufferedReader"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
 </qualifiedTypeNameHistroy>

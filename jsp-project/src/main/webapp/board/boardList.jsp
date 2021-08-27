@@ -1,3 +1,4 @@
+<%@page import="com.example.repository.RecommendDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.example.domain.PageDTO"%>
 <%@page import="com.example.domain.Criteria"%>
@@ -28,6 +29,7 @@ if (tab != null) {
 
 //DAO 객체준비
 BoardDAO boardDAO = BoardDAO.getInstance();
+RecommendDAO recDAO = RecommendDAO.getInstance();
 
 //board 테이블에서 전체 글 가져오기
 List<BoardVO> boardList = boardDAO.getBoards(cri);
@@ -114,6 +116,7 @@ a{
 
 					for (BoardVO boardVO : boardList) {
 						date = sdf.format(boardVO.getRegDate());
+						
 					%>
 					<tr id="boardList"
 						onclick="location.href='/board/boardContent.jsp?boardNum=<%=boardVO.getBoardNum()%>&tab=<%=cri.getTab()%>&pageNum=<%=cri.getPageNum()%>'">
@@ -148,7 +151,7 @@ a{
 						<%=boardVO.getSubject()%></td>
 						<td class="center"><%=boardVO.getMemberId()%></td>
 						<td class="center"><%=date%></td>
-						<td class="center">0</td>
+						<td class="center"><%=recDAO.getCountByBoard(boardVO.getBoardNum()) %></td>
 						<td class="center"><%=boardVO.getViewCount()%></td>
 					</tr>
 					<%

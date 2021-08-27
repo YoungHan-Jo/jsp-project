@@ -106,8 +106,44 @@ public class RecommendDAO {
 		return count;
 	} // getCountByBoard
 	
-	public int getCountByRecVO(RecommendVO recVO) {
+	public List<String> getAccountsByBoardNum(int boardNum){
+		List<String> list = new ArrayList<>();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
+		try {
+			con = JdbcUtils.getConnection();
+
+			String sql = "";
+			sql += "SELECT id ";
+			sql += " FROM recommend ";
+			sql += " WHERE board_num = ? ";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, boardNum);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				
+				list.add(id);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+		
+		return list;
+	} //getAccountsByBoardNum
+	
+	public boolean isRecommendedByRecVO(RecommendVO recVO) {
+
+		boolean isRecommended = false;
 		int count = 0;
 
 		Connection con = null;
@@ -138,8 +174,12 @@ public class RecommendDAO {
 		} finally {
 			JdbcUtils.close(con, pstmt);
 		}
-
-		return count;
+		
+		if(count > 0) {
+			isRecommended = true;
+		}
+		
+		return isRecommended;
 	} // getCountByRecVO
 
 	public void addRecommend(RecommendVO recVO) {
