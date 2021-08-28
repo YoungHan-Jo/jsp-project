@@ -27,15 +27,39 @@ if (tab != null) {
 	cri.setTab(tab);
 }
 
+//type 파라미터 가져오기
+String type = "";
+if(request.getParameter("type") != null){
+	cri.setType(type);
+}
+
+//keyword 파라미터 가져오기
+String keyword = ""; 
+if(request.getParameter("keyword") != null){
+	cri.setKeyword(keyword);
+}
+
 //DAO 객체준비
 BoardDAO boardDAO = BoardDAO.getInstance();
 RecommendDAO recDAO = RecommendDAO.getInstance();
 
-//board 테이블에서 전체 글 가져오기
-List<BoardVO> boardList = boardDAO.getBoards(cri);
+//board 테이블에서 글 가져오기
+List<BoardVO> boardList;
 
-// 전체 글(조건에 맞는 글) 개수 가져오기
-int totalCount = boardDAO.getCountByCriteria(cri);
+//전체 글(조건에 맞는 글) 개수 가져오기
+int totalCount;
+
+if(cri.getType().length()>0 && cri.getKeyword().length() > 0){ // 검색 시
+	boardList = boardDAO.getBoardsByKeyword(cri);
+	totalCount = boardDAO.getCountByKeyword(cri);
+}else{ // 검색 아닐 때
+	boardList = boardDAO.getBoards(cri);
+	totalCount = boardDAO.getCountByCriteria(cri);
+}
+
+
+
+
 
 //페이지 블록정보
 PageDTO pageDTO = new PageDTO(cri, totalCount);
@@ -119,7 +143,7 @@ a{
 						
 					%>
 					<tr id="boardList"
-						onclick="location.href='/board/boardContent.jsp?boardNum=<%=boardVO.getBoardNum()%>&tab=<%=cri.getTab()%>&pageNum=<%=cri.getPageNum()%>'">
+						onclick="location.href='/board/boardContent.jsp?boardNum=<%=boardVO.getBoardNum()%>&tab=<%=cri.getTab()%>&type=<%=cri.getType() %>&keyword=<%=cri.getKeyword() %>&pageNum=<%=cri.getPageNum()%>'">
 						<td class="center"><%=boardVO.getBoardNum()%></td>
 						<td style="width: 10%" class="center">
 							<%
@@ -167,7 +191,7 @@ a{
 				if (pageDTO.isPrev()) {
 				%>
 				<li class="waves-effect"><a
-					href="/board/boardList.jsp?tab=<%=cri.getTab() %>&pageNum=<%=pageDTO.getStartPage() - 1%>">
+					href="/board/boardList.jsp?tab=<%=cri.getTab() %>&type=<%=cri.getType() %>&keyword=<%=cri.getKeyword() %>&pageNum=<%=pageDTO.getStartPage() - 1%>">
 						<i class="material-icons">chevron_left</i>
 				</a></li>
 				<%
@@ -178,7 +202,7 @@ a{
 				for (int i = pageDTO.getStartPage(); i <= pageDTO.getEndPage(); ++i) {
 				%>
 				<li class="waves-effect <%=cri.getPageNum() == i ? "active" : ""%>">
-					<a href="/board/boardList.jsp?tab=<%=cri.getTab()%>&pageNum=<%=i%>"><%=i%></a>
+					<a href="/board/boardList.jsp?tab=<%=cri.getTab()%>&type=<%=cri.getType() %>&keyword=<%=cri.getKeyword() %>&pageNum=<%=i%>"><%=i%></a>
 				</li>
 				<%
 				}
@@ -189,7 +213,7 @@ a{
 				if (pageDTO.isNext()) {
 				%>
 				<li class="waves-effect"><a
-					href="/board/boardList.jsp?tab=<%=cri.getTab() %>&pageNum=<%=pageDTO.getEndPage() + 1%>">
+					href="/board/boardList.jsp?tab=<%=cri.getTab() %>&type=<%=cri.getType() %>&keyword=<%=cri.getKeyword() %>&pageNum=<%=pageDTO.getEndPage() + 1%>">
 						<i class="material-icons">chevron_right</i>
 				</a></li>
 				<%
@@ -205,12 +229,12 @@ a{
 				<div class="row">
 					<div class="col s12 m3 l3">
 						<div class="input-field">
-							<i class="material-icons prefix">find_in_page</i> <select
-								name="type">
+							<i class="material-icons prefix">find_in_page</i> 
+							<select	name="type">
 								<option value="" disabled selected>--</option>
-								<option value="subject">제목</option>
-								<option value="content">내용</option>
-								<option value="mid">작성자</option>
+								<option value="subject" <%=cri.getType().equals("subject")? "selected" : "" %>>제목</option>
+								<option value="content" <%=cri.getType().equals("content")? "selected" : "" %>>내용</option>
+								<option value="member_id" <%=cri.getType().equals("member_id")? "selected" : "" %>>작성자</option>
 							</select><label>검색 조건</label>
 						</div>
 					</div>
@@ -219,7 +243,7 @@ a{
 						<!-- AutoComplete -->
 						<div class="input-field">
 							<i class="material-icons prefix">search</i> <input type="text"
-								id="autocomplete-input" class="autocomplete" name="keyword" />
+								id="autocomplete-input" class="autocomplete" name="keyword" value="<%=cri.getKeyword() %>"/>
 							<label for="autocomplete-input">검색어</label>
 						</div>
 						<!-- end of AutoComplete -->
@@ -243,8 +267,16 @@ a{
 		$('select#tabs').on('change', function(event) {
 			var tab = event.target.value;
 
-			location.href = `/board/boardList.jsp?tab=\${tab}&pageNum=1`;
+			location.href = `/board/boardList.jsp?tab=\${tab}&type=<%=type %>&keyword=<%=keyword %>&pageNum=1`;
 		})
+		
+		$('#btnSearch').on('click',function(){
+			
+			//폼 태그의 쿼리들을 문자열로 한번에 가져옴. // type=subject&keyword=답글
+			var query = $('#frm').serialize();
+			
+			location.href = '/board/boardList.jsp?tab=<%=cri.getTab()%>' + '&' + query;
+		});
 	</script>
 </body>
 </html>

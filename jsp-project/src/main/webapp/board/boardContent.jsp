@@ -12,8 +12,11 @@
 <%
 String id = (String) session.getAttribute("sessionLoginId");
 
+
 int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 String tab = request.getParameter("tab");
+String type = request.getParameter("type");
+String keyword = request.getParameter("keyword");
 String pageNum = request.getParameter("pageNum");
 
 //DAO 객체 준비
@@ -45,15 +48,12 @@ recVO.setId(id);
 boolean isRec = recDAO.isRecommendedByRecVO(recVO);
 
 List<String> list = recDAO.getAccountsByBoardNum(boardNum);
-
-
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <jsp:include page="/include/head.jsp" />
 <style>
-
 </style>
 </head>
 <body class="brown lighten-4">
@@ -75,16 +75,16 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 					<td>
 						<%
 						switch (boardVO.getTab()) {
-						case "R":
+							case "R" :
 						%>리뷰<%
 						break;
-						case "I":
+						case "I" :
 						%>정보<%
 						break;
-						case "C":
+						case "C" :
 						%>잡담<%
 						break;
-						default:
+						default :
 						%>기타<%
 						}
 						%>
@@ -102,9 +102,9 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 					<th>조회수</th>
 					<td><%=boardVO.getViewCount()%></td>
 					<th>추천수</th>
-					<td class="likey-count"><%=recCount %></td>
+					<td class="likey-count"><%=recCount%></td>
 				</tr>
-				<tr id="content" >
+				<tr id="content">
 					<td colspan="6"><pre><%=boardVO.getContent()%></pre></td>
 				</tr>
 				<tr>
@@ -118,60 +118,55 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 							for (AttachVO attach : attachList) {
 								if (attach.getFileType().equals("I")) { // 이미지 파일
 									// 썸네일 이미지 경로
-	                   				String fileCallPath = attach.getUploadPath() + "/s_" + attach.getFileName();
-	                   				// 원본 이미지 경로
-	                   				String fileCallPathOrigin = attach.getUploadPath() + "/" + attach.getFileName();
-	                   				%>
-	                   				<li>
-	                   					<a href="/board/download.jsp?fileName=<%=fileCallPathOrigin %>">
-	                   						<img src="/board/display.jsp?fileName=<%=fileCallPath%>">
-	                   						<%=attach.getFileName() %>
-	                   					</a>
-	                   					<hr>
-	                   				</li>
-	                   				<%
-									
-								} else {// 일반파일
-									String fileCallPath = attach.getUploadPath() + "/" + attach.getFileName();
-									%>
-									<li><a
-										href="/board/download.jsp?fileName=<%=fileCallPath%>"> <i
-										class="material-icons">file_present</i> <%=attach.getFileName()%>
-									</a>
-									<hr>
-									</li>
-										
-									<%
-								}
-		
+									String fileCallPath = attach.getUploadPath() + "/s_" + attach.getFileName();
+									// 원본 이미지 경로
+									String fileCallPathOrigin = attach.getUploadPath() + "/" + attach.getFileName();
+							%>
+							<li><a
+								href="/board/download.jsp?fileName=<%=fileCallPathOrigin%>">
+									<img src="/board/display.jsp?fileName=<%=fileCallPath%>">
+									<%=attach.getFileName()%>
+							</a>
+								<hr></li>
+							<%
+							} else {// 일반파일
+							String fileCallPath = attach.getUploadPath() + "/" + attach.getFileName();
+							%>
+							<li><a href="/board/download.jsp?fileName=<%=fileCallPath%>">
+									<i class="material-icons">file_present</i> <%=attach.getFileName()%>
+							</a>
+								<hr></li>
+
+							<%
 							}
-								%>
-						</ul> 
-						<%
-						 }else {
-							 %>
-							 첨부파일 없음
-							 <%
-						 }
-						 %>
+
+							}
+							%>
+						</ul> <%
+ } else {
+ %> 첨부파일 없음 <%
+ }
+ %>
 					</td>
 				</tr>
 			</table>
 		</div>
 		<div class="section">
-			<div class="row center"	>
+			<div class="row center">
 				<form action="" id="likey-form">
-				<input type="hidden" name="boardNum" value="<%=boardNum %>">
-				<input type="hidden" name="id" value="<%=id %>">
-				<a class="waves-effect waves-light btn pink lighten-2" id="btn-likey">
-				<%
-				if(isRec == true){
-				%><i class="material-icons left likey-icon">favorite</i><%	
-				}else{
-				%><i class="material-icons left likey-icon">favorite_border</i><%
-				}
-				%>
-				<span class="likey-count"><%=recCount %></span></a>
+					<input type="hidden" name="boardNum" value="<%=boardNum%>">
+					<input type="hidden" name="id" value="<%=id%>"> <a
+						class="waves-effect waves-light btn pink lighten-2" id="btn-likey">
+						<%
+						if (isRec == true) {
+						%><i class="material-icons left likey-icon">favorite</i>
+						<%
+						} else {
+						%><i class="material-icons left likey-icon">favorite_border</i>
+						<%
+						}
+						%> <span class="likey-count"><%=recCount%></span>
+					</a>
 				</form>
 			</div>
 		</div>
@@ -182,8 +177,8 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 					if (boardVO.getMemberId().equals(id)) {
 					%>
 					<a class="btn waves-effect waves-light"
-						href="/board/modifyBoard.jsp?boardNum=<%=boardVO.getBoardNum() %>&tab=<%=tab %>&pageNum=<%=pageNum%>"> <i
-						class="material-icons left">edit</i>글수정
+						href="/board/modifyBoard.jsp?boardNum=<%=boardVO.getBoardNum()%>&tab=<%=tab%>&pageNum=<%=pageNum%>">
+						<i class="material-icons left">edit</i>글수정
 					</a> <a class="btn waves-effect waves-light" onclick="remove(event)">
 						<i class="material-icons left">delete</i>글삭제
 					</a>
@@ -191,11 +186,20 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 					}
 					%>
 
+					<%
+					if (id != null) {
+					%>
 					<a class="btn waves-effect waves-light"
-						href="/board/replyWrite.jsp?tab=<%=boardVO.getTab() %>&reRef=<%=boardVO.getReRef() %>&reLev=<%=boardVO.getReLev() %>&reSeq=<%=boardVO.getReSeq() %>&pageNum=<%=pageNum %>"> <i
-						class="material-icons left">reply</i>답글
-					</a> <a class="btn waves-effect waves-light"
-						href="/board/boardList.jsp?tab=<%=tab%>&pageNum=<%=pageNum%>">
+						href="/board/replyWrite.jsp?tab=<%=tab%>&reRef=<%=boardVO.getReRef()%>&reLev=<%=boardVO.getReLev()%>&reSeq=<%=boardVO.getReSeq()%>&type=<%=type%>&keyword=<%=keyword%>&pageNum=<%=pageNum%>">
+						<i class="material-icons left">reply</i>답글
+					</a>
+					<%
+					}
+					%>
+
+
+					<a class="btn waves-effect waves-light"
+						href="/board/boardList.jsp?tab=<%=tab%>&type=<%=type%>&keyword=<%=keyword%>&pageNum=<%=pageNum%>">
 						<i class="material-icons left">list</i>글목록
 					</a>
 				</div>
@@ -212,109 +216,120 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 		
 		const isRemove = confirm('게시글을 삭제하시겠습니까?');
 		if(isRemove == true){
-			location.href = '/board/deleteBoard.jsp?boardNum=<%=boardVO.getBoardNum() %>';
+			location.href = '/board/deleteBoard.jsp?boardNum=<%=boardVO.getBoardNum()%>';
+			}
+
 		}
-		
-	}
-	
-	function showLikey(){
-		$.ajax({ // 변경된 DB 내용 가져와서 화면으로 나타내기
-			url : '/api/recommend/'+ <%=boardNum %>,
-			method : 'GET',
-			success : function(data){
-				console.log('---추가 후 리스트--');
-				console.log(data.list);
-				console.log('--------');
-				console.log(data.count);
-				
-				// 좋아요 수 화면에 나타내기
-				$('.likey-count').text(data.count);
-				
-				// 빈하트, 꽉찬하트 아이콘 전환 나타내기
-				var id = $('input[name="id"]').val();
-				if(data.list.indexOf(id) == -1){ // 리스트에 존재하지 않음.
-					$('i.likey-icon').text('favorite_border');
-				}else{ // 리스트에 존재함
-					$('i.likey-icon').text('favorite');
-				}
-				
-				
-			} // success GET
-			
-		});
-		
-	}
-	
-	$('#btn-likey').on('click',function(){
-		var obj = {
-				boardNum: $('input[name="boardNum"]').val(),
-				id: $('input[name="id"]').val()
-		}; 
-		
-		console.log(obj);
-		console.log(typeof obj);
-		
-		console.log(obj.id);
-		
-		if(obj.id == 'null'){
-			alert('로그인이 필요한 서비스 입니다.');
-		}else{
-			var strJson = JSON.stringify(obj);
-			console.log(strJson);
-			console.log(typeof strJson);
-			
-			
-			// 현재 게시글을 추천한 id 리스트 들고와서 현재 id와 중복 체크
-			$.ajax({
-				url : '/api/recommend/'+ <%=boardNum %>,
+
+		function showLikey() {
+			$.ajax({ // 변경된 DB 내용 가져와서 화면으로 나타내기
+				url : '/api/recommend/' +
+	<%=boardNum%>
+		,
 				method : 'GET',
-				success : function(data){
-					var list = data.list;
-					console.log('--리스트 목록--');
-					console.log(list);
-					console.log('---------------');
-					console.log(list.indexOf(obj.id));
-					
-					if(list.indexOf(obj.id) == -1){ // 리스트에 존재하지 않음.(좋아요 추가하기)
-						
-						// 좋아요 등록하기
-						$.ajax({ // DB에 추가
-							url: '/api/recommend',
-							method: 'POST',
-							data: strJson,
-							contentType: 'application/json; charset=UTF-8',
-							success: function (data) {
-								
-								showLikey();
-								
-							} // success POST
-						});
-						
-					}else{ // 리스트에 존재함.(좋아요 취소하기)
-						
-						// 좋아요 취소하기
-						$.ajax({ // DB에서 삭제
-							url: '/api/recommend',
-							method: 'DELETE',
-							data: strJson,
-							contentType: 'application/json; charset=UTF-8',
-							success: function (data){
-								
-								showLikey();
-								
-							} // seccess DELETE
-						})
-						
+				success : function(data) {
+					console.log('---추가 후 리스트--');
+					console.log(data.list);
+					console.log('--------');
+					console.log(data.count);
+
+					// 좋아요 수 화면에 나타내기
+					$('.likey-count').text(data.count);
+
+					// 빈하트, 꽉찬하트 아이콘 전환 나타내기
+					var id = $('input[name="id"]').val();
+					if (data.list.indexOf(id) == -1) { // 리스트에 존재하지 않음.
+						$('i.likey-icon').text('favorite_border');
+					} else { // 리스트에 존재함
+						$('i.likey-icon').text('favorite');
 					}
-					
-				}
-				
+
+				} // success GET
+
 			});
 
 		}
 
-	});
-	
+		$('#btn-likey')
+				.on(
+						'click',
+						function() {
+							var obj = {
+								boardNum : $('input[name="boardNum"]').val(),
+								id : $('input[name="id"]').val()
+							};
+
+							console.log(obj);
+							console.log(typeof obj);
+
+							console.log(obj.id);
+
+							if (obj.id == 'null') {
+								alert('로그인이 필요한 서비스 입니다.');
+							} else {
+								var strJson = JSON.stringify(obj);
+								console.log(strJson);
+								console.log(typeof strJson);
+
+								// 현재 게시글을 추천한 id 리스트 들고와서 현재 id와 중복 체크
+								$
+										.ajax({
+											url : '/api/recommend/'
+													+
+	<%=boardNum%>
+		,
+											method : 'GET',
+											success : function(data) {
+												var list = data.list;
+												console.log('--리스트 목록--');
+												console.log(list);
+												console.log('---------------');
+												console.log(list
+														.indexOf(obj.id));
+
+												if (list.indexOf(obj.id) == -1) { // 리스트에 존재하지 않음.(좋아요 추가하기)
+
+													// 좋아요 등록하기
+													$
+															.ajax({ // DB에 추가
+																url : '/api/recommend',
+																method : 'POST',
+																data : strJson,
+																contentType : 'application/json; charset=UTF-8',
+																success : function(
+																		data) {
+
+																	showLikey();
+
+																} // success POST
+															});
+
+												} else { // 리스트에 존재함.(좋아요 취소하기)
+
+													// 좋아요 취소하기
+													$
+															.ajax({ // DB에서 삭제
+																url : '/api/recommend',
+																method : 'DELETE',
+																data : strJson,
+																contentType : 'application/json; charset=UTF-8',
+																success : function(
+																		data) {
+
+																	showLikey();
+
+																} // seccess DELETE
+															})
+
+												}
+
+											}
+
+										});
+
+							}
+
+						});
 	</script>
 </body>
 </html>

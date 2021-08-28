@@ -8,6 +8,10 @@ String tab = "";
 if(request.getParameter("tab") != null){
 	tab = request.getParameter("tab");
 }
+
+String type = request.getParameter("type");
+String keyword = request.getParameter("keyword");
+
 String pageNum = "1";
 if(request.getParameter("pageNum") != null){
 	pageNum = request.getParameter("pageNum");
@@ -36,6 +40,8 @@ int reSeq = Integer.parseInt(request.getParameter("reSeq"));
 		</div>
 		<form action="/board/replyWritePro.jsp" method="POST" enctype="multipart/form-data">
 			<input type="hidden" name="pageNum" value="<%=pageNum%>" />
+			<input type="hidden" name="type" value="<%=type%>" />
+			<input type="hidden" name="keyword" value="<%=keyword%>" />
 			<input type="hidden" name="reRef" value="<%=reRef%>" />
 			<input type="hidden" name="reLev" value="<%=reLev%>" />
 			<input type="hidden" name="reSeq" value="<%=reSeq%>" />
@@ -93,7 +99,7 @@ int reSeq = Integer.parseInt(request.getParameter("reSeq"));
 				</button>
 				&nbsp;&nbsp;
 				<button class="btn waves-effect waves-light" type="button"
-					onclick="location.href = '/board/boardList.jsp?tab=<%=tab%>&pageNum=<%=pageNum%>'">
+					onclick="location.href = '/board/boardList.jsp?tab=<%=tab%>&type=<%=type %>&keyword=<%=keyword %>&pageNum=<%=pageNum%>'">
 					글목록 <i class="material-icons right">list</i>
 				</button>
 			</div>

@@ -138,6 +138,48 @@ public class BoardDAO {
 
 		return count;
 	} // getCountByCriteria
+	
+	public int getCountByKeyword(Criteria cri) {
+
+		int count = 0;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = JdbcUtils.getConnection();
+
+			String sql = "";
+			sql += "SELECT COUNT(*) AS cnt ";
+			sql += " FROM board ";
+			sql += " WHERE " + cri.getType() + " LIKE ? ";
+			if (cri.getTab().length() > 0) {
+				sql += " AND tab = ? ";
+			}
+
+			pstmt = con.prepareStatement(sql);
+			if (cri.getTab().length() > 0) {
+				pstmt.setString(1, "%" + cri.getKeyword() + "%");
+				pstmt.setString(2, cri.getTab());
+			}else {
+				pstmt.setString(1, "%" + cri.getKeyword() + "%");
+			}
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				count = rs.getInt("cnt");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+
+		return count;
+	} // getCountByKeyword
 
 	public BoardVO getBoardByBoardNum(int boardNum) {
 
@@ -244,14 +286,14 @@ public class BoardDAO {
 			String sql = "";
 			sql += "SELECT * ";
 			sql += " FROM board ";
-			if (cri.getTab().equals("") == false && cri.getTab() != null) { // tab 이 공백이 아니고 널값이 아닐 때
+			if (cri.getTab().length() > 0) {
 				sql += " WHERE tab = ? ";
 			}
 			sql += " ORDER BY re_ref DESC, re_seq ASC ";
 			sql += " LIMIT ?,? ";
 
 			pstmt = con.prepareStatement(sql);
-			if (cri.getTab().equals("") == false && cri.getTab() != null) { // tab 이 공백이 아니고 널값이 아닐 때
+			if (cri.getTab().length() > 0) {
 				pstmt.setString(1, cri.getTab());
 				pstmt.setInt(2, startRow);
 				pstmt.setInt(3, cri.getAmount());
@@ -286,6 +328,68 @@ public class BoardDAO {
 
 		return list;
 	} // getBoards
+	
+	public List<BoardVO> getBoardsByKeyword(Criteria cri) {
+
+		List<BoardVO> list = new ArrayList<>();
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		int startRow = (cri.getPageNum() - 1) * cri.getAmount();
+
+		try {
+			con = JdbcUtils.getConnection();
+
+			String sql = "";
+			sql += "SELECT * ";
+			sql += " FROM board ";
+			sql += " WHERE " + cri.getType() + " LIKE ? ";
+			if (cri.getTab().length() > 0) {
+				sql += " AND tab = ? ";
+			}
+			sql += " ORDER BY re_ref DESC, re_seq ASC ";
+			sql += " LIMIT ?,? ";
+
+			pstmt = con.prepareStatement(sql);
+			if (cri.getTab().length() > 0) {
+				pstmt.setString(1, "%" + cri.getKeyword() + "%");
+				pstmt.setString(2, cri.getTab());
+				pstmt.setInt(3, startRow);
+				pstmt.setInt(4, cri.getAmount());
+			} else {
+				pstmt.setString(1, "%" + cri.getKeyword() + "%");
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, cri.getAmount());
+			}
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				BoardVO boardVO = new BoardVO();
+				boardVO.setBoardNum(rs.getInt("board_num"));
+				boardVO.setTab(rs.getString("tab"));
+				boardVO.setMemberId(rs.getString("member_id"));
+				boardVO.setSubject(rs.getString("subject"));
+				boardVO.setContent(rs.getString("content"));
+				boardVO.setViewCount(rs.getInt("view_count"));
+				boardVO.setRegDate(rs.getTimestamp("reg_date"));
+				boardVO.setReRef(rs.getInt("re_ref"));
+				boardVO.setReLev(rs.getInt("re_lev"));
+				boardVO.setReSeq(rs.getInt("re_seq"));
+
+				list.add(boardVO);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+
+		return list;
+	} // getBoardsByKeyword
 
 	public List<BoardVO> getBoardsByMemberId(String id) {
 

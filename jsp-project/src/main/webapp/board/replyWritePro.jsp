@@ -177,7 +177,10 @@ boardVO.setReSeq(reSeq);
 boardDAO.updateReSeqAndAddReply(boardVO);
 
 // 페이지 상세보기로 넘어가기
+String type = multi.getParameter("type");
+String keyword = multi.getParameter("keyword");
 String pageNum = multi.getParameter("pageNum");
 System.out.println("pageNum : " + pageNum);
-response.sendRedirect("/board/boardContent.jsp?boardNum=" + boardVO.getBoardNum() + "&tab=&pageNum=" + pageNum);
+response.sendRedirect("/board/boardContent.jsp?boardNum=" + boardVO.getBoardNum() + "&tab=" + "&type=" + type
+		+ "&keyword=" + keyword + "&pageNum=" + pageNum);
 %>
