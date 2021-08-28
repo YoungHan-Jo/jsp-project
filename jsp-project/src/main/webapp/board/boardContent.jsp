@@ -104,8 +104,8 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 					<th>추천수</th>
 					<td class="likey-count"><%=recCount %></td>
 				</tr>
-				<tr id="content">
-					<td><pre><%=boardVO.getContent()%></pre></td>
+				<tr id="content" >
+					<td colspan="6"><pre><%=boardVO.getContent()%></pre></td>
 				</tr>
 				<tr>
 					<th>첨부파일</th>
@@ -166,9 +166,9 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 				<a class="waves-effect waves-light btn pink lighten-2" id="btn-likey">
 				<%
 				if(isRec == true){
-				%><i class="material-icons left">favorite</i><%	
+				%><i class="material-icons left likey-icon">favorite</i><%	
 				}else{
-				%><i class="material-icons left">favorite_border</i><%
+				%><i class="material-icons left likey-icon">favorite_border</i><%
 				}
 				%>
 				<span class="likey-count"><%=recCount %></span></a>
@@ -217,6 +217,34 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 		
 	}
 	
+	function showLikey(){
+		$.ajax({ // 변경된 DB 내용 가져와서 화면으로 나타내기
+			url : '/api/recommend/'+ <%=boardNum %>,
+			method : 'GET',
+			success : function(data){
+				console.log('---추가 후 리스트--');
+				console.log(data.list);
+				console.log('--------');
+				console.log(data.count);
+				
+				// 좋아요 수 화면에 나타내기
+				$('.likey-count').text(data.count);
+				
+				// 빈하트, 꽉찬하트 아이콘 전환 나타내기
+				var id = $('input[name="id"]').val();
+				if(data.list.indexOf(id) == -1){ // 리스트에 존재하지 않음.
+					$('i.likey-icon').text('favorite_border');
+				}else{ // 리스트에 존재함
+					$('i.likey-icon').text('favorite');
+				}
+				
+				
+			} // success GET
+			
+		});
+		
+	}
+	
 	$('#btn-likey').on('click',function(){
 		var obj = {
 				boardNum: $('input[name="boardNum"]').val(),
@@ -235,38 +263,57 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 			console.log(strJson);
 			console.log(typeof strJson);
 			
-			// ajax 함수 호출
+			
+			// 현재 게시글을 추천한 id 리스트 들고와서 현재 id와 중복 체크
 			$.ajax({
-				url: '/api/recommend',
-				method: 'POST',
-				data: strJson,
-				contentType: 'application/json; charset=UTF-8',
-				success: function (data) {
+				url : '/api/recommend/'+ <%=boardNum %>,
+				method : 'GET',
+				success : function(data){
+					var list = data.list;
+					console.log('--리스트 목록--');
+					console.log(list);
+					console.log('---------------');
+					console.log(list.indexOf(obj.id));
 					
-					$.ajax({
-						url : '/api/recommend/'+ <%=boardNum %>,
-						method : 'GET',
-						success : function(data){
-							console.log(data);
-							console.log(typeof data);
-							console.log(data.count);
-							$('.likey-count').text(data.count);
-							
-						}
+					if(list.indexOf(obj.id) == -1){ // 리스트에 존재하지 않음.(좋아요 추가하기)
 						
-					});
+						// 좋아요 등록하기
+						$.ajax({ // DB에 추가
+							url: '/api/recommend',
+							method: 'POST',
+							data: strJson,
+							contentType: 'application/json; charset=UTF-8',
+							success: function (data) {
+								
+								showLikey();
+								
+							} // success POST
+						});
+						
+					}else{ // 리스트에 존재함.(좋아요 취소하기)
+						
+						// 좋아요 취소하기
+						$.ajax({ // DB에서 삭제
+							url: '/api/recommend',
+							method: 'DELETE',
+							data: strJson,
+							contentType: 'application/json; charset=UTF-8',
+							success: function (data){
+								
+								showLikey();
+								
+							} // seccess DELETE
+						})
+						
+					}
+					
 				}
+				
 			});
+
 		}
-		
-		
-		
+
 	});
-	
-	
-	
-	
-	
 	
 	</script>
 </body>
