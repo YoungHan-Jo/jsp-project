@@ -12,7 +12,6 @@
 <%
 String id = (String) session.getAttribute("sessionLoginId");
 
-
 int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 String tab = request.getParameter("tab");
 String type = request.getParameter("type");
@@ -159,13 +158,11 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 						class="waves-effect waves-light btn pink lighten-2" id="btn-likey">
 						<%
 						if (isRec == true) {
-						%><i class="material-icons left likey-icon">favorite</i>
-						<%
-						} else {
-						%><i class="material-icons left likey-icon">favorite_border</i>
-						<%
-						}
-						%> <span class="likey-count"><%=recCount%></span>
+						%><i class="material-icons left likey-icon">favorite</i> <%
+ } else {
+ %><i class="material-icons left likey-icon">favorite_border</i> <%
+ }
+ %> <span class="likey-count"><%=recCount%></span>
 					</a>
 				</form>
 			</div>
@@ -205,6 +202,29 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 				</div>
 			</div>
 		</div>
+		<div class="section">
+			<h5>댓글</h5>
+			<hr>
+			<div class="row">
+				<table>
+					<tr>
+						<td>Alvin</td>
+						<td>Eclair</td>
+						<td>$0.87</td>
+					</tr>
+					<tr>
+						<td>Alan</td>
+						<td>Jellybean</td>
+						<td>$3.76</td>
+					</tr>
+					<tr>
+						<td>Jonathan</td>
+						<td>Lollipop</td>
+						<td>$7.00</td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</div>
 
 	<!-- footer area -->
@@ -216,7 +236,8 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 		
 		const isRemove = confirm('게시글을 삭제하시겠습니까?');
 		if(isRemove == true){
-			location.href = '/board/deleteBoard.jsp?boardNum=<%=boardVO.getBoardNum()%>';
+			location.href = '/board/deleteBoard.jsp?boardNum=<%=boardVO.getBoardNum()%>
+		';
 			}
 
 		}
