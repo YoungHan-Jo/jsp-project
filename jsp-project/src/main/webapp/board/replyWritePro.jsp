@@ -181,6 +181,7 @@ String type = multi.getParameter("type");
 String keyword = multi.getParameter("keyword");
 String pageNum = multi.getParameter("pageNum");
 System.out.println("pageNum : " + pageNum);
-response.sendRedirect("/board/boardContent.jsp?boardNum=" + boardVO.getBoardNum() + "&tab=" + "&type=" + type
+System.out.println("keyword : " + keyword);
+response.sendRedirect("/board/boardContent.jsp?boardNum=" + boardVO.getBoardNum() + "&tab=&type=" + type
 		+ "&keyword=" + keyword + "&pageNum=" + pageNum);
 %>

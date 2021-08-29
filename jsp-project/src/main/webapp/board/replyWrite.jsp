@@ -12,6 +12,8 @@ if(request.getParameter("tab") != null){
 String type = request.getParameter("type");
 String keyword = request.getParameter("keyword");
 
+System.out.println("keyword : "+ keyword	);
+
 String pageNum = "1";
 if(request.getParameter("pageNum") != null){
 	pageNum = request.getParameter("pageNum");

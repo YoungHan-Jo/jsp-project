@@ -30,14 +30,19 @@ if (tab != null) {
 //type 파라미터 가져오기
 String type = "";
 if(request.getParameter("type") != null){
+	type = request.getParameter("type");
 	cri.setType(type);
 }
 
 //keyword 파라미터 가져오기
 String keyword = ""; 
 if(request.getParameter("keyword") != null){
+	keyword = request.getParameter("keyword");
 	cri.setKeyword(keyword);
 }
+
+System.out.println("type : " + type);
+System.out.println("keyword : " + keyword);
 
 //DAO 객체준비
 BoardDAO boardDAO = BoardDAO.getInstance();
