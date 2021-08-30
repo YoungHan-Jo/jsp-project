@@ -1,3 +1,5 @@
+<%@page import="com.example.domain.CommentVO"%>
+<%@page import="com.example.repository.CommentDAO"%>
 <%@page import="com.example.domain.RecommendVO"%>
 <%@page import="com.example.repository.RecommendDAO"%>
 <%@page import="com.example.domain.AttachVO"%>
@@ -47,12 +49,22 @@ recVO.setId(id);
 boolean isRec = recDAO.isRecommendedByRecVO(recVO);
 
 List<String> list = recDAO.getAccountsByBoardNum(boardNum);
+
+//======== 댓글 ========
+CommentDAO commentDAO = CommentDAO.getInstance();
+
+List<CommentVO> commentList = commentDAO.getCommentsByBoardNum(boardNum);
+
+
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <jsp:include page="/include/head.jsp" />
 <style>
+.comment-id {
+	font-size: 20px;
+}
 </style>
 </head>
 <body class="brown lighten-4">
@@ -142,10 +154,10 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 							}
 							%>
 						</ul> <%
- } else {
- %> 첨부파일 없음 <%
- }
- %>
+							 } else {
+							 %> 첨부파일 없음 <%
+							 }
+							 %>
 					</td>
 				</tr>
 			</table>
@@ -159,10 +171,10 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 						<%
 						if (isRec == true) {
 						%><i class="material-icons left likey-icon">favorite</i> <%
- } else {
- %><i class="material-icons left likey-icon">favorite_border</i> <%
- }
- %> <span class="likey-count"><%=recCount%></span>
+						 } else {
+						 %><i class="material-icons left likey-icon">favorite_border</i> <%
+						 }
+						 %> <span class="likey-count"><%=recCount%></span>
 					</a>
 				</form>
 			</div>
@@ -207,22 +219,30 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 			<hr>
 			<div class="row">
 				<table>
-					<tr>
-						<td>Alvin</td>
-						<td>Eclair</td>
-						<td>$0.87</td>
-					</tr>
-					<tr>
-						<td>Alan</td>
-						<td>Jellybean</td>
-						<td>$3.76</td>
-					</tr>
-					<tr>
-						<td>Jonathan</td>
-						<td>Lollipop</td>
-						<td>$7.00</td>
-					</tr>
+					<%
+					for(CommentVO comment : commentList){
+						%>
+						<tr>
+							<td style="width: 50%"><span class="comment-id"><%=comment.getId() %></span><br><%=comment.getContent() %></td>
+							<td></td>
+							<td>$0.87</td>
+						</tr>
+						<%
+					}
+					 %>
 				</table>
+			</div>
+			<div class="row">
+				<form
+					action="/board/commentWrite.jsp?boardNum=<%=boardVO.getBoardNum()%>&tab=<%=tab%>&type=<%=type%>&keyword=<%=keyword%>&pageNum=<%=pageNum%>"
+					method="POST">
+					<div class="input-field col s12">
+						<textarea id="textarea1" class="materialize-textarea" name="content"></textarea>
+						<label for="textarea1">댓글 쓰기</label>
+					</div>
+					<button type="submit" class="waves-effect waves-light btn" >
+						쓰기</button>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -236,17 +256,14 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 		
 		const isRemove = confirm('게시글을 삭제하시겠습니까?');
 		if(isRemove == true){
-			location.href = '/board/deleteBoard.jsp?boardNum=<%=boardVO.getBoardNum()%>
-		';
+			location.href = '/board/deleteBoard.jsp?boardNum=<%=boardVO.getBoardNum()%>';
 			}
 
 		}
 
 		function showLikey() {
 			$.ajax({ // 변경된 DB 내용 가져와서 화면으로 나타내기
-				url : '/api/recommend/' +
-	<%=boardNum%>
-		,
+				url : '/api/recommend/' + <%=boardNum%>,
 				method : 'GET',
 				success : function(data) {
 					console.log('---추가 후 리스트--');
@@ -271,10 +288,7 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 
 		}
 
-		$('#btn-likey')
-				.on(
-						'click',
-						function() {
+		$('#btn-likey').on('click',function() {
 							var obj = {
 								boardNum : $('input[name="boardNum"]').val(),
 								id : $('input[name="id"]').val()
@@ -293,63 +307,46 @@ List<String> list = recDAO.getAccountsByBoardNum(boardNum);
 								console.log(typeof strJson);
 
 								// 현재 게시글을 추천한 id 리스트 들고와서 현재 id와 중복 체크
-								$
-										.ajax({
-											url : '/api/recommend/'
-													+
-	<%=boardNum%>
-		,
-											method : 'GET',
-											success : function(data) {
-												var list = data.list;
-												console.log('--리스트 목록--');
-												console.log(list);
-												console.log('---------------');
-												console.log(list
-														.indexOf(obj.id));
+								$.ajax({
+									url : '/api/recommend/'+<%=boardNum%>,
+									method : 'GET',
+									success : function(data) {
+										var list = data.list;
+										console.log('--리스트 목록--');
+										console.log(list);
+										console.log('---------------');
+										console.log(list.indexOf(obj.id));
 
-												if (list.indexOf(obj.id) == -1) { // 리스트에 존재하지 않음.(좋아요 추가하기)
+										if (list.indexOf(obj.id) == -1) { // 리스트에 존재하지 않음.(좋아요 추가하기)
 
-													// 좋아요 등록하기
-													$
-															.ajax({ // DB에 추가
-																url : '/api/recommend',
-																method : 'POST',
-																data : strJson,
-																contentType : 'application/json; charset=UTF-8',
-																success : function(
-																		data) {
+											// 좋아요 등록하기
+											$.ajax({ // DB에 추가
+												url : '/api/recommend',
+												method : 'POST',
+												data : strJson,
+												contentType : 'application/json; charset=UTF-8',
+												success : function(data) {
+													showLikey();
 
-																	showLikey();
+												} // success POST
+											});
 
-																} // success POST
-															});
+										} else { // 리스트에 존재함.(좋아요 취소하기)
 
-												} else { // 리스트에 존재함.(좋아요 취소하기)
-
-													// 좋아요 취소하기
-													$
-															.ajax({ // DB에서 삭제
-																url : '/api/recommend',
-																method : 'DELETE',
-																data : strJson,
-																contentType : 'application/json; charset=UTF-8',
-																success : function(
-																		data) {
-
-																	showLikey();
-
-																} // seccess DELETE
-															})
-
-												}
-
-											}
-
-										});
-
+											// 좋아요 취소하기
+											$.ajax({ // DB에서 삭제
+												url : '/api/recommend',
+												method : 'DELETE',
+												data : strJson,
+												contentType : 'application/json; charset=UTF-8',
+												success : function(data) {
+													showLikey();
+												} // seccess DELETE
+											})
+										}
+									}
+								});
 							}
-
 						});
 	</script>
 </body>
