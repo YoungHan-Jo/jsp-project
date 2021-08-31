@@ -43,7 +43,6 @@
     <fullyQualifiedTypeName name="com.example.domain.ReviewVO"/>
     <fullyQualifiedTypeName name="javax.servlet.http.HttpServlet"/>
     <fullyQualifiedTypeName name="javax.servlet.annotation.WebServlet"/>
-    <fullyQualifiedTypeName name="lombok.Data"/>
     <fullyQualifiedTypeName name="com.google.gson.JsonObject"/>
     <fullyQualifiedTypeName name="com.example.repository.RecommendDAO"/>
     <fullyQualifiedTypeName name="com.google.gson.Gson"/>
@@ -54,4 +53,6 @@
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="lombok.Data"/>
+    <fullyQualifiedTypeName name="com.example.domain.CommentVO"/>
 </qualifiedTypeNameHistroy>
