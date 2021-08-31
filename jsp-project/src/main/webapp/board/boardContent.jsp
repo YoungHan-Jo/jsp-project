@@ -63,7 +63,8 @@ List<CommentVO> commentList = commentDAO.getCommentsByBoardNum(boardNum);
 <jsp:include page="/include/head.jsp" />
 <style>
 .comment-id {
-	font-size: 20px;
+	font-size: 23px;
+	font-weight: 700;
 }
 </style>
 </head>
@@ -218,14 +219,20 @@ List<CommentVO> commentList = commentDAO.getCommentsByBoardNum(boardNum);
 			<h5>댓글</h5>
 			<hr>
 			<div class="row">
-				<table>
+				<table class="comment">
 					<%
 					for(CommentVO comment : commentList){
 						%>
-						<tr>
-							<td style="width: 50%"><span class="comment-id"><%=comment.getId() %></span><br><%=comment.getContent() %></td>
-							<td></td>
-							<td>$0.87</td>
+						<tr id="<%=comment.getCommentNum() %>">
+							<td style="width: 70%"><span class="comment-id"><%=comment.getId() %></span><br><%=comment.getContent() %></td>
+							<%if(id != null && id.equals(comment.getId())){
+								%>
+							<td style="width: 20%"><a class="waves-effect waves-light btn">수정</a> <a class="waves-effect waves-light btn" id="comment-delete">삭제</a></td>
+								<%								
+							}else{
+								%><td style="width: 20%"> </td><%
+							}%>
+							<td style="width: 10%"><a class="waves-effect waves-light btn">답장</a></td>
 						</tr>
 						<%
 					}
@@ -348,6 +355,19 @@ List<CommentVO> commentList = commentDAO.getCommentsByBoardNum(boardNum);
 								});
 							}
 						});
+		
+		$('table.comment').on('click','#comment-delete',function(){
+			console.log($(this).closest('tr'));
+			console.log($(this).closest('tr')[0].id);
+			var commentNum = $(this).closest('tr')[0].id;
+			
+			$(this).closest('tr').remove();
+			
+			location.href = '/board/deleteComment.jsp?commentNum='+commentNum
+					+'&boardNum=<%=boardNum %>'+'&tab=<%=tab %>' +'&type=<%=type %>' +'&keyword=<%=keyword %>'+'&pageNum=<%=pageNum%>';
+		})
+		
+		
 	</script>
 </body>
 </html>

@@ -54,5 +54,7 @@
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.HashMap"/>
     <fullyQualifiedTypeName name="lombok.Data"/>
+    <fullyQualifiedTypeName name="com.example.repository.CommentDAO"/>
     <fullyQualifiedTypeName name="com.example.domain.CommentVO"/>
+    <fullyQualifiedTypeName name="com.example.util.CommentDeserializer"/>
 </qualifiedTypeNameHistroy>
