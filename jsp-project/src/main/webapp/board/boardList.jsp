@@ -121,7 +121,6 @@ a{
 			<%
 			}
 			%>
-
 		</div>
 		<div class="row">
 			<table class="highlight">

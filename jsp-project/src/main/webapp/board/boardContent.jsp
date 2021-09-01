@@ -1,3 +1,5 @@
+<%@page import="com.example.domain.MemberVO"%>
+<%@page import="com.example.repository.MemberDAO"%>
 <%@page import="com.example.domain.CommentVO"%>
 <%@page import="com.example.repository.CommentDAO"%>
 <%@page import="com.example.domain.RecommendVO"%>
@@ -65,6 +67,14 @@ List<CommentVO> commentList = commentDAO.getCommentsByBoardNum(boardNum);
 .comment-id {
 	font-size: 23px;
 	font-weight: 700;
+}
+
+a{
+	color: black;
+}
+
+.hidden {
+	display: none;
 }
 </style>
 </head>
@@ -219,25 +229,55 @@ List<CommentVO> commentList = commentDAO.getCommentsByBoardNum(boardNum);
 			<h5>댓글</h5>
 			<hr>
 			<div class="row">
-				<table class="comment">
+				<ul class="collection comment">
 					<%
 					for(CommentVO comment : commentList){
+						MemberDAO memberDAO = MemberDAO.getInstance();
+						MemberVO memberVO = memberDAO.getMemberById(comment.getId());
 						%>
-						<tr id="<%=comment.getCommentNum() %>">
-							<td style="width: 70%"><span class="comment-id"><%=comment.getId() %></span><br><%=comment.getContent() %></td>
-							<%if(id != null && id.equals(comment.getId())){
+						<li class="collection-item avatar brown lighten-3" id="<%=comment.getCommentNum()%>">
+							<span class="title"><b><%=memberVO.getName() %></b> (<%=comment.getId() %>)</span>
+							<p><%=comment.getContent() %></p> 
+							<span class="secondary-content">
+								<%if(id != null && id.equals(comment.getId())){
+									%>
+								<span class="grey-text text-lighten-1">|</span> <a href="#!" id="comment-delete">삭제</a>
+								<span class="grey-text text-lighten-1">|</span> <a href="#!" id="comment-update">수정</a>
+								<%
+								}
 								%>
-							<td style="width: 20%"><a class="waves-effect waves-light btn">수정</a> <a class="waves-effect waves-light btn" id="comment-delete">삭제</a></td>
-								<%								
-							}else{
-								%><td style="width: 20%"> </td><%
-							}%>
-							<td style="width: 10%"><a class="waves-effect waves-light btn">답장</a></td>
-						</tr>
+								<span class="grey-text text-lighten-1">|</span> <a href="#!">답글</a>
+							</span>
+						</li>
+						<%if(id != null && id.equals(comment.getId())){
+						%>
+						<li class="collection-item brown lighten-4 update-area hidden"  style="margin-left: 40px;">
+							<div class="row" style="margin-left: 0px;">
+								<div class="col s12">
+									<span style="font-size: 15px;">댓글 수정</span>
+								</div>
+								<div class="col s12">
+									<form action="" method="POST">
+										<div class="row">
+											<div class="col s12 m9">
+												<textarea class="materialize-textarea"><%=comment.getContent() %></textarea>
+											</div>
+											<div class="col s12 m3">
+												<button type="submit"
+													class="btn-large waves-effect waves-light">수정</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</li>
 						<%
+						}
+						%>
+					<%
 					}
-					 %>
-				</table>
+					%>
+				</ul>
 			</div>
 			<div class="row">
 				<form
@@ -356,16 +396,22 @@ List<CommentVO> commentList = commentDAO.getCommentsByBoardNum(boardNum);
 							}
 						});
 		
-		$('table.comment').on('click','#comment-delete',function(){
-			console.log($(this).closest('tr'));
-			console.log($(this).closest('tr')[0].id);
-			var commentNum = $(this).closest('tr')[0].id;
+		$('ul.comment').on('click','#comment-delete',function(){
+			console.log($(this).closest('li'));
+			console.log($(this).closest('li')[0].id);
+			var commentNum = $(this).closest('li')[0].id;
 			
-			$(this).closest('tr').remove();
+			$(this).closest('li').remove();
 			
 			location.href = '/board/deleteComment.jsp?commentNum='+commentNum
 					+'&boardNum=<%=boardNum %>'+'&tab=<%=tab %>' +'&type=<%=type %>' +'&keyword=<%=keyword %>'+'&pageNum=<%=pageNum%>';
-		})
+		});
+		
+		$('ul.comment').on('click','#comment-update',function(){
+			var commentNum = $(this).closest('li')[0].id;
+			console.log($(this).closest('li').next()[0]);
+			$(this).closest('li').next().toggleClass('hidden');
+		});
 		
 		
 	</script>
