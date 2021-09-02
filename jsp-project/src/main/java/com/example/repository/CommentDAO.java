@@ -279,4 +279,63 @@ public class CommentDAO {
 	} // updateComment
 
 
+	public void updateReSeqAndAddReply(CommentVO commentVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = JdbcUtils.getConnection();
+			// 수동커밋으로 변경
+			con.setAutoCommit(false);
+
+			// 답글을 다는 대상글과 같은 글 그룹 내에서
+			// 답글을 다는 대상들의 그룹내 순번보다 큰 클들의 순번을 1씩 증가
+			String sql = "";
+			sql += " UPDATE comment ";
+			sql += " SET re_seq = re_seq + 1  ";
+			sql += " WHERE re_ref = ? ";
+			sql += " AND re_seq > ? ";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, commentVO.getReRef());
+			pstmt.setInt(2, commentVO.getReSeq());
+
+			pstmt.executeUpdate();
+			pstmt.close();
+
+			sql = "";
+			sql += "INSERT INTO comment(comment_num, board_num,id,content,re_ref,re_lev,re_seq) ";
+			sql += " VALUES (?,?,?,?,?,?,?) ";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, commentVO.getCommentNum());
+			pstmt.setInt(2, commentVO.getBoardNum());			
+			pstmt.setString(3, commentVO.getId());
+			pstmt.setString(4, commentVO.getContent());
+			// re컬럼값은 insert될 답글정보로 수정하기
+			pstmt.setInt(5, commentVO.getReRef()); // 글 그룹은 동일
+			pstmt.setInt(6, commentVO.getReLev() + 1); // 답글의 레벨 = 답글을 달 대상글의 레벨 + 1
+			pstmt.setInt(7, commentVO.getReSeq() + 1); // 답글의 순번 = 답글을 달 대상글의 순번 + 1
+
+			pstmt.executeUpdate();
+			
+			con.commit();// 수동으로 커밋하기
+			
+			con.setAutoCommit(true);// 오토커밋 원상태로 돌려놓기
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			try {
+				//예외 발생 시 롤백
+				con.rollback();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+
+	} // updateReSeqAndAddReply
 }

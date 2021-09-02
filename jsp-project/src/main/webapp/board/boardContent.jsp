@@ -235,9 +235,26 @@ a{
 						MemberDAO memberDAO = MemberDAO.getInstance();
 						MemberVO memberVO = memberDAO.getMemberById(comment.getId());
 						%>
-						<li class="collection-item avatar brown lighten-3" id="<%=comment.getCommentNum()%>">
+						<li class="collection-item avatar brown lighten-3" id="<%=comment.getCommentNum()%>"
+							style="padding-left: <%=comment.getReLev()*20 + 20 %>px">
+							<%
+							if(comment.getReSeq() > 0){
+								%>
+							<i class="material-icons">subdirectory_arrow_right</i>								
+								<%
+							}
+							%>
+							
 							<span class="title"><b><%=memberVO.getName() %></b> (<%=comment.getId() %>)</span>
-							<p><%=comment.getContent() %></p> 
+							<p>
+							<%
+							if(comment.getReSeq() > 0){
+								%>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;							
+								<%
+							}
+							%>
+							<%=comment.getContent() %></p> 
 							<span class="secondary-content">
 								<%if(id != null && id.equals(comment.getId())){
 									%>
@@ -246,8 +263,9 @@ a{
 								<%
 								}
 								%>
-								<span class="grey-text text-lighten-1">|</span> <a href="#!">답글</a>
+								<span class="grey-text text-lighten-1">|</span> <a href="#!" id="comment-reply">답글</a>
 							</span>
+							
 						</li>
 						<%if(id != null && id.equals(comment.getId())){
 						%>
@@ -257,10 +275,10 @@ a{
 									<span style="font-size: 15px;">댓글 수정</span>
 								</div>
 								<div class="col s12">
-									<form action="" method="POST">
+									<form action="/board/modifyComment.jsp?commentNum=<%=comment.getCommentNum() %>&boardNum=<%=comment.getBoardNum() %>&tab=<%=tab %>&type=<%=type %>&keyword=<%=keyword %>&pageNum=<%=pageNum%>" method="POST">
 										<div class="row">
 											<div class="col s12 m9">
-												<textarea class="materialize-textarea"><%=comment.getContent() %></textarea>
+												<textarea class="materialize-textarea" name="content"><%=comment.getContent() %></textarea>
 											</div>
 											<div class="col s12 m3">
 												<button type="submit"
@@ -274,6 +292,26 @@ a{
 						<%
 						}
 						%>
+						<li class="collection-item brown lighten-4 update-area hidden"  style="margin-left: 40px;">
+							<div class="row" style="margin-left: 0px;">
+								<div class="col s12">
+									<i class="material-icons">subdirectory_arrow_right</i><span style="font-size: 15px;">답글 작성</span>
+								</div>
+								<div class="col s12">
+									<form action="/board/replyComment.jsp?commentNum=<%=comment.getCommentNum() %>&boardNum=<%=comment.getBoardNum() %>&tab=<%=tab %>&type=<%=type %>&keyword=<%=keyword %>&pageNum=<%=pageNum%>" method="POST">
+										<div class="row">
+											<div class="col s12 m9">
+												<textarea class="materialize-textarea" name="content"></textarea>
+											</div>
+											<div class="col s12 m3">
+												<button type="submit"
+													class="btn-large waves-effect waves-light">쓰기</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</li>
 					<%
 					}
 					%>
@@ -411,6 +449,12 @@ a{
 			var commentNum = $(this).closest('li')[0].id;
 			console.log($(this).closest('li').next()[0]);
 			$(this).closest('li').next().toggleClass('hidden');
+		});
+		
+		$('ul.comment').on('click','#comment-reply',function(){
+			var commentNum = $(this).closest('li')[0].id;
+			console.log($(this).closest('li').next().next()[0]);
+			$(this).closest('li').next().next().toggleClass('hidden');
 		});
 		
 		

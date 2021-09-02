@@ -33,7 +33,7 @@ commentVO.setCommentNum(nextNum);
 commentVO.setBoardNum(boardNum);
 commentVO.setId(id);
 commentVO.setContent(content);
-commentVO.setReRef(0);
+commentVO.setReRef(nextNum);
 commentVO.setReLev(0);
 commentVO.setReSeq(0);
 
