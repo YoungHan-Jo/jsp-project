@@ -76,6 +76,10 @@ a{
 .hidden {
 	display: none;
 }
+
+#regDate-comment{
+	color: black;
+}
 </style>
 </head>
 <body class="brown lighten-4">
@@ -234,9 +238,15 @@ a{
 					for(CommentVO comment : commentList){
 						MemberDAO memberDAO = MemberDAO.getInstance();
 						MemberVO memberVO = memberDAO.getMemberById(comment.getId());
+						
+						SimpleDateFormat sdfComment = new SimpleDateFormat("yyyy-MM-dd");
+						
+						String commentDate = sdfComment.format(comment.getRegDate());
+						
 						%>
 						<li class="collection-item avatar brown lighten-3" id="<%=comment.getCommentNum()%>"
 							style="padding-left: <%=comment.getReLev()*20 + 20 %>px">
+							<input type="hidden" name="<%=comment.getId()%>">
 							<%
 							if(comment.getReSeq() > 0){
 								%>
@@ -247,6 +257,7 @@ a{
 							
 							<span class="title"><b><%=memberVO.getName() %></b> (<%=comment.getId() %>)</span>
 							<p>
+							<br>
 							<%
 							if(comment.getReSeq() > 0){
 								%>
@@ -256,6 +267,7 @@ a{
 							%>
 							<%=comment.getContent() %></p> 
 							<span class="secondary-content">
+									<span class="grey-text text-lighten-1">|</span> <span id="regDate-comment"><%=commentDate %></span>
 								<%if(id != null && id.equals(comment.getId())){
 									%>
 								<span class="grey-text text-lighten-1">|</span> <a href="#!" id="comment-delete">삭제</a>
@@ -445,19 +457,38 @@ a{
 					+'&boardNum=<%=boardNum %>'+'&tab=<%=tab %>' +'&type=<%=type %>' +'&keyword=<%=keyword %>'+'&pageNum=<%=pageNum%>';
 		});
 		
+		// 댓글 수정 클릭 시
 		$('ul.comment').on('click','#comment-update',function(){
 			var commentNum = $(this).closest('li')[0].id;
 			console.log($(this).closest('li').next()[0]);
 			$(this).closest('li').next().toggleClass('hidden');
 		});
 		
+		
+		// 댓글 답글 클릭 시
 		$('ul.comment').on('click','#comment-reply',function(){
-			var commentNum = $(this).closest('li')[0].id;
-			console.log($(this).closest('li').next().next()[0]);
-			$(this).closest('li').next().next().toggleClass('hidden');
+			<%
+			if(id != null){
+				%>
+				var sessionId = '<%=id%>';
+				var commentId = $(this).closest('li').children('input:first')[0].name;
+				console.log(commentId);
+				var commentNum = $(this).closest('li')[0].id;
+				console.log($(this).closest('li').next().next()[0]);
+				
+				if(commentId == sessionId){
+					$(this).closest('li').next().next().toggleClass('hidden');	
+				}else{
+					$(this).closest('li').next().toggleClass('hidden');
+				}
+				<%
+			}else{
+				%>
+				alert('로그인이 필요한 서비스입니다.');
+				<%
+			}
+			%>
 		});
-		
-		
 	</script>
 </body>
 </html>

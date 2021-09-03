@@ -3,6 +3,7 @@ package com.example.repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,6 +131,7 @@ public class CommentDAO {
 				commentVO.setBoardNum(rs.getInt("board_num"));
 				commentVO.setId(rs.getString("id"));
 				commentVO.setContent(rs.getString("content"));
+				commentVO.setRegDate(rs.getTimestamp("reg_date"));
 				commentVO.setReRef(rs.getInt("re_ref"));
 				commentVO.setReLev(rs.getInt("re_lev"));
 				commentVO.setReSeq(rs.getInt("re_seq"));
@@ -173,6 +175,7 @@ public class CommentDAO {
 				commentVO.setBoardNum(rs.getInt("board_num"));
 				commentVO.setId(rs.getString("id"));
 				commentVO.setContent(rs.getString("content"));
+				commentVO.setRegDate(rs.getTimestamp("reg_date"));
 				commentVO.setReRef(rs.getInt("re_ref"));
 				commentVO.setReLev(rs.getInt("re_lev"));
 				commentVO.setReSeq(rs.getInt("re_seq"));
@@ -229,17 +232,18 @@ public class CommentDAO {
 			con = JdbcUtils.getConnection();
 
 			String sql = "";
-			sql += "INSERT INTO comment(comment_num, board_num,id,content,re_ref,re_lev,re_seq) ";
-			sql += " VALUES (?,?,?,?,?,?,?) ";
+			sql += "INSERT INTO comment(comment_num, board_num,id,content, reg_date, re_ref,re_lev,re_seq) ";
+			sql += " VALUES (?,?,?,?,?,?,?,?) ";
 
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, commentVO.getCommentNum());
 			pstmt.setInt(2, commentVO.getBoardNum());			
 			pstmt.setString(3, commentVO.getId());
 			pstmt.setString(4, commentVO.getContent());
-			pstmt.setInt(5, commentVO.getReRef());
-			pstmt.setInt(6, commentVO.getReLev());
-			pstmt.setInt(7, commentVO.getReSeq());
+			pstmt.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+			pstmt.setInt(6, commentVO.getReRef());
+			pstmt.setInt(7, commentVO.getReLev());
+			pstmt.setInt(8, commentVO.getReSeq());
 
 			pstmt.executeUpdate();
 
@@ -305,18 +309,19 @@ public class CommentDAO {
 			pstmt.close();
 
 			sql = "";
-			sql += "INSERT INTO comment(comment_num, board_num,id,content,re_ref,re_lev,re_seq) ";
-			sql += " VALUES (?,?,?,?,?,?,?) ";
+			sql += "INSERT INTO comment(comment_num, board_num,id,content,reg_date,re_ref,re_lev,re_seq) ";
+			sql += " VALUES (?,?,?,?,?,?,?,?) ";
 
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, commentVO.getCommentNum());
 			pstmt.setInt(2, commentVO.getBoardNum());			
 			pstmt.setString(3, commentVO.getId());
 			pstmt.setString(4, commentVO.getContent());
+			pstmt.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
 			// re컬럼값은 insert될 답글정보로 수정하기
-			pstmt.setInt(5, commentVO.getReRef()); // 글 그룹은 동일
-			pstmt.setInt(6, commentVO.getReLev() + 1); // 답글의 레벨 = 답글을 달 대상글의 레벨 + 1
-			pstmt.setInt(7, commentVO.getReSeq() + 1); // 답글의 순번 = 답글을 달 대상글의 순번 + 1
+			pstmt.setInt(6, commentVO.getReRef()); // 글 그룹은 동일
+			pstmt.setInt(7, commentVO.getReLev() + 1); // 답글의 레벨 = 답글을 달 대상글의 레벨 + 1
+			pstmt.setInt(8, commentVO.getReSeq() + 1); // 답글의 순번 = 답글을 달 대상글의 순번 + 1
 
 			pstmt.executeUpdate();
 			
