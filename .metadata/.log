@@ -15978,3 +15978,18 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2021-09-04 01:51:17.799
 !MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-09-04 01:53:31.820
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.BNyYxXDE
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-09-04 01:53:31.821
+!MESSAGE unsubscribing from classpath changes: sts4.classpath.BNyYxXDE
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-09-04 01:53:31.822
+!MESSAGE subsribers = {}
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-09-04 01:53:31.823
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.BNyYxXDE => OK
+
+!ENTRY org.eclipse.ui 2 2 2021-09-04 01:53:32.764
+!MESSAGE Invalid property category path: org.springframework.ide.eclipse.beans.ui.properties.ProjectPropertyPage (bundle: org.springframework.ide.eclipse.xml.namespaces, propertyPage: org.springframework.ide.eclipse.beans.ui.namespaces.projectPropertyPage)
