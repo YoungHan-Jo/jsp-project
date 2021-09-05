@@ -30,7 +30,7 @@ String id = (String) session.getAttribute("sessionLoginId");
 			} else { // 로그인 되어있음
 				if(id.equals("admin")){
 					%>
-					<li><a href="/member/admin.jsp">관리자</a></li>
+					<li><a href="/admin/manageMembers.jsp">관리자</a></li>
 					<%
 				}
 			%>
