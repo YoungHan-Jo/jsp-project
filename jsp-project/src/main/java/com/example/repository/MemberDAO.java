@@ -3,6 +3,8 @@ package com.example.repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.domain.MemberVO;
 
@@ -100,6 +102,50 @@ public class MemberDAO {
 		}
 
 	} // insert
+	
+	public List<MemberVO> getMembers() {
+
+		List<MemberVO> list = new ArrayList<>();
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = JdbcUtils.getConnection();
+
+			String sql = "";
+			sql += "SELECT * ";
+			sql += " FROM member ";
+			sql += " ORDER BY id ASC ";
+
+			pstmt = con.prepareStatement(sql);
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				MemberVO memberVO = new MemberVO();
+				memberVO.setId(rs.getString("id"));
+				memberVO.setPasswd(rs.getString("passwd"));
+				memberVO.setName(rs.getString("name"));
+				memberVO.setBirthday(rs.getString("birthday"));
+				memberVO.setGender(rs.getString("gender"));
+				memberVO.setEmail(rs.getString("email"));
+				memberVO.setRecvEmail(rs.getString("recv_email"));
+				memberVO.setRegDate(rs.getTimestamp("reg_date"));
+				
+				list.add(memberVO);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+
+		return list;
+	} // getMemberById
+	
 
 	public MemberVO getMemberById(String id) {
 
