@@ -1,3 +1,4 @@
+<%@page import="com.example.repository.CommentDAO"%>
 <%@page import="com.example.repository.RecommendDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.example.domain.PageDTO"%>
@@ -141,9 +142,12 @@ a{
 					<%
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 					String date;
+					
+					CommentDAO commentDAO = CommentDAO.getInstance();
 
 					for (BoardVO boardVO : boardList) {
 						date = sdf.format(boardVO.getRegDate());
+						int commentNum = commentDAO.getCountByBoard(boardVO.getBoardNum());
 						
 					%>
 					<tr id="boardList"
@@ -176,7 +180,7 @@ a{
 						}
 						%>
 						
-						<%=boardVO.getSubject()%></td>
+						<%=boardVO.getSubject()%> (<%=commentNum %>)</td>
 						<td class="center"><%=boardVO.getMemberId()%></td>
 						<td class="center"><%=date%></td>
 						<td class="center"><%=recDAO.getCountByBoard(boardVO.getBoardNum()) %></td>

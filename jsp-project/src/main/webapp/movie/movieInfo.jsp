@@ -182,7 +182,7 @@ img.movie-info {
 									</td>
 									<td style="width: 50%"><%=reviewVO.getReviewContent() %></td>
 									<%
-									if(reviewVO.getId().equals(id) == true){
+									if(id != null && (reviewVO.getId().equals(id) || id.equals("admin"))){
 										%><td class="right delete"><a id="btn-delete" class="waves-effect waves-light btn">삭제</a></td><%	
 									}
 									%>

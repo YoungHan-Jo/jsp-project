@@ -102,6 +102,40 @@ public class CommentDAO {
 
 		return count;
 	} // getCountAll
+	
+	public int getCountByBoard(int boardNum) {
+
+		int count = 0;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = JdbcUtils.getConnection();
+
+			String sql = "";
+			sql += "SELECT COUNT(*) AS cnt ";
+			sql += " FROM comment ";
+			sql += " WHERE board_num = ? ";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, boardNum);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				count = rs.getInt("cnt");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+
+		return count;
+	} // getCountAll
 
 
 	public CommentVO getCommentByCommentNum(int commentNum) {

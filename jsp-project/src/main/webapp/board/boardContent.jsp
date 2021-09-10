@@ -198,12 +198,13 @@ a{
 			<div class="row">
 				<div class="col s12 right-align">
 					<%
-					if (boardVO.getMemberId().equals(id)) {
+					if (id != null && (boardVO.getMemberId().equals(id) || id.equals("admin"))) {
 					%>
 					<a class="btn waves-effect waves-light"
 						href="/board/modifyBoard.jsp?boardNum=<%=boardVO.getBoardNum()%>&tab=<%=tab%>&pageNum=<%=pageNum%>">
 						<i class="material-icons left">edit</i>글수정
-					</a> <a class="btn waves-effect waves-light" onclick="remove(event)">
+					</a>
+					<a class="btn waves-effect waves-light" onclick="remove(event)">
 						<i class="material-icons left">delete</i>글삭제
 					</a>
 					<%
@@ -230,7 +231,7 @@ a{
 			</div>
 		</div>
 		<div class="section">
-			<h5>댓글</h5>
+			<h5>댓글 (<%=commentDAO.getCountByBoard(boardNum) %>)</h5>
 			<hr>
 			<div class="row">
 				<ul class="collection comment">
@@ -268,7 +269,7 @@ a{
 							<%=comment.getContent() %></p> 
 							<span class="secondary-content">
 									<span class="grey-text text-lighten-1">|</span> <span id="regDate-comment"><%=commentDate %></span>
-								<%if(id != null && id.equals(comment.getId())){
+								<%if(id != null && (id.equals(comment.getId()) || id.equals("admin") )){
 									%>
 								<span class="grey-text text-lighten-1">|</span> <a href="#!" id="comment-delete">삭제</a>
 								<span class="grey-text text-lighten-1">|</span> <a href="#!" id="comment-update">수정</a>

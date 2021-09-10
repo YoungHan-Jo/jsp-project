@@ -16,8 +16,6 @@ a {
 		<li class="collection-header brown lighten-2 white-text"><h4>관리자</h4></li>
 		<li class="collection-item hover lighten-3"><a
 			href="/admin/manageMembers.jsp">회원 관리</a></li>
-		<li class="collection-item hover lighten-3"><a
-			href="/admin/manageBoards.jsp">게시글 관리</a></li>
 
 	</ul>
 </div>
