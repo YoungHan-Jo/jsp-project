@@ -137,12 +137,12 @@ display: none
 			$('#btnDelete').addClass('hidden');
 		}
 		$('table').html(str);
-	}// showData
+	}// showOneData
 
 
 	$('button#btnTotal').on('click', function() {
 
-		//ajax 함수 호출 - 비동기(쓰레드랑 비슷) 자바스크립트
+		//ajax 함수 호출
 		$.ajax({
 			url : '/api/members',
 			method : 'GET',
@@ -186,6 +186,7 @@ display: none
 				url : '/api/members/' + id,
 				method : 'DELETE',
 				success : function (data){
+					console.log(data)
 					
 					if (data.isDeleted == true) {
 						alert(id + ' : 회원정보 삭제 성공');

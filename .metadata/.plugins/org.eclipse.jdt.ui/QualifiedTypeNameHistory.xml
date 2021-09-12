@@ -34,7 +34,6 @@
     <fullyQualifiedTypeName name="lombok.ToString"/>
     <fullyQualifiedTypeName name="com.example.repository.BoardDAO"/>
     <fullyQualifiedTypeName name="com.example.domain.BoardVO"/>
-    <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="com.example.domain.Criteria"/>
     <fullyQualifiedTypeName name="com.example.domain.AttachVO"/>
     <fullyQualifiedTypeName name="com.example.domain.ReviewVO"/>
@@ -60,4 +59,5 @@
     <fullyQualifiedTypeName name="com.example.util.MemberDeserializer"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
 </qualifiedTypeNameHistroy>

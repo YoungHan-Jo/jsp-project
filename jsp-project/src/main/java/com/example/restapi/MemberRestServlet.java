@@ -138,6 +138,8 @@ public class MemberRestServlet extends HttpServlet {
 
 		// 자바객체 -> JSON 문자열로 변환 (직렬화)
 		String strResponse = gson.toJson(map); // {}
+		
+		System.out.println(strResponse);
 
 		// 클라이언트 쪽으로 출력하기
 		sendResponse(response, strResponse);
