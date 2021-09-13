@@ -3,6 +3,8 @@ package com.example.repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.domain.MovieVO;
 
@@ -71,6 +73,48 @@ public class MovieDAO {
 		}
 
 	} // insert
+	
+	public List<MovieVO> getMoviesByReleasedMonth(String releasedMonth) {
+
+		List<MovieVO> list = new ArrayList<>();
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = JdbcUtils.getConnection();
+
+			String sql = "";
+			sql += "SELECT * ";
+			sql += " FROM movie ";
+			sql += " WHERE release_date LIKE ? ";
+			sql += " ORDER BY release_date ASC " ;
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, releasedMonth + "%" );
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				MovieVO movieVO = new MovieVO();
+				movieVO.setMovieNum(rs.getString("movie_num"));
+				movieVO.setMovieTitle(rs.getString("movie_title"));
+				movieVO.setReleaseDate(rs.getString("release_date"));
+				movieVO.setThumbnail(rs.getString("thumbnail"));
+				movieVO.setMovieSynopsis(rs.getString("movie_synopsis"));
+				
+				list.add(movieVO);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtils.close(con, pstmt);
+		}
+
+		return list;
+	} // getMoviesByReleasedMonth
 
 	public MovieVO getMovieByMovieNum(String movieNum) {
 
