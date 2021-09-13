@@ -52,8 +52,7 @@ img.movie-chart {
 	padding-left: 30px;
 }
 
-.carousel-slider,
-.carousel-box {
+.carousel-slider, .carousel-box {
 	height: 500px;
 }
 
@@ -139,6 +138,28 @@ img.movie-chart {
 						<span><%=releaseDate%></span> <span>개봉</span>
 
 					</div>
+					<%
+					int len = movieVO.getMovieTitle().length();
+					
+					
+					if (len <25 ) {
+					%>
+					<div class="section"></div>
+					<div class="section"></div>
+					
+					<%
+					}
+					%>
+					<%
+					if (len < 100) {
+					%>
+					<div class="section"></div>
+					<div class="section"></div>
+					
+					<%
+					}
+					%>
+
 				</div>
 				<%
 				}
