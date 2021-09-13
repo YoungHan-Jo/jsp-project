@@ -18,7 +18,7 @@ String id = (String) session.getAttribute("sessionLoginId");
 			data-target="mobile-demo" class="sidenav-trigger"><i
 			class="material-icons">menu</i></a>
 		<ul id="nav-mobile" class="right hide-on-med-and-down">
-			<li><a href="sass.html">영화</a></li>
+			<li><a href="/movie/movieList.jsp">영화</a></li>
 			<li><a href="/board/boardList.jsp?tab=&pageNum=1">게시판</a></li>
 
 			<%
