@@ -1,3 +1,4 @@
+<%@page import="com.example.repository.ReviewDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.example.domain.ScheduledMovieVO"%>
 <%@page import="com.example.repository.ScheduledMovieDAO"%>
@@ -28,6 +29,9 @@ if (month.equals("00")) {
 
 MovieDAO movieDAO = MovieDAO.getInstance();
 List<MovieVO> movieList = movieDAO.getMoviesByReleasedMonth(releasedMonth);
+
+ReviewDAO reviewDAO = ReviewDAO.getInstance();
+
 %>
 
 <!DOCTYPE html>
@@ -126,6 +130,9 @@ img.movie-chart {
 					Date date = sdf.parse(str);
 
 					String releaseDate = toString.format(date);
+					
+					double avgStar = reviewDAO.getAvgStarByMovieNum(movieVO.getMovieNum());
+					avgStar = (double) Math.round(avgStar*100.0) / 100.0;
 				%>
 				<div class="movie-chart-list col l3 m6 s12">
 
@@ -136,6 +143,24 @@ img.movie-chart {
 					<div class="box-contents">
 						<h5 class="title"><%=movieVO.getMovieTitle()%></h5>
 						<span><%=releaseDate%></span> <span>개봉</span>
+						<div class="section star">
+						<span class="avgStar">평점 : <%if(avgStar >= 5){
+														%>
+														★★★★★
+														<%
+														}else if(avgStar >= 4){
+														%>★★★★☆<%	
+														}else if(avgStar >= 3){
+														%>★★★☆☆<%	
+														}else if(avgStar >= 2){
+														%>★★☆☆☆<%	
+														}else if(avgStar >= 1){
+														%>★☆☆☆☆<%	
+														}else if(avgStar >= 0){
+														%>☆☆☆☆☆<%	
+														}%><%=avgStar %> / </span>
+					<span>5.0</span>								
+			</div>
 
 					</div>
 					<%

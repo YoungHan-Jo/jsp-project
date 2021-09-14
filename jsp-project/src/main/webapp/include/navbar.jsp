@@ -14,7 +14,7 @@ String id = (String) session.getAttribute("sessionLoginId");
 
 <nav class="nav-extended brown darken-4">
 	<div class="nav-wrapper container">
-		<a href="/index.jsp" class="brand-logo">Logo</a> <a href="#"
+		<a href="/index.jsp" class="brand-logo">Movie Chart</a> <a href="#"
 			data-target="mobile-demo" class="sidenav-trigger"><i
 			class="material-icons">menu</i></a>
 		<ul id="nav-mobile" class="right hide-on-med-and-down">
