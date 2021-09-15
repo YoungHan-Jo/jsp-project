@@ -240,7 +240,7 @@ public class ReviewDAO {
 			
 			while(rs.next()) {
 				ReviewVO reviewVO = new ReviewVO();
-				reviewVO.setReviewNum(rs.getInt("riview_num"));
+				reviewVO.setReviewNum(rs.getInt("review_num"));
 				reviewVO.setMovieNum(rs.getString("movie_num"));
 				reviewVO.setId(rs.getString("id"));
 				reviewVO.setStar(rs.getString("star"));
