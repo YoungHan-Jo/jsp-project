@@ -39,16 +39,7 @@ List<ReviewVO> reviewList = reviewDAO.getReviewsByMemberId(id);
 				<h4>내가 쓴 글</h4>
 				<hr />
 			</div>
-			<div class="row">
-				<div class="col s6 m4 l3">
-					<select id="tabs">
-						<option value="" disabled>탭 선택</option>
-						<option value="B">게시글</option>
-						<option value="C">댓글</option>
-						<option value="R">한줄리뷰</option>
-					</select>
-				</div>
-			</div>
+			
 			<div class="row">
 			<table class="highlight">
 				<thead>

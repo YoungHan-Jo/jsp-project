@@ -100,7 +100,7 @@ public class RecommendDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return count;
@@ -135,7 +135,7 @@ public class RecommendDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt,rs);
 		}
 		
 		return list;
@@ -172,7 +172,7 @@ public class RecommendDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 		
 		if(count > 0) {

@@ -110,7 +110,7 @@ public class MovieDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return list;
@@ -149,7 +149,7 @@ public class MovieDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return movieVO;
@@ -183,7 +183,7 @@ public class MovieDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return count;

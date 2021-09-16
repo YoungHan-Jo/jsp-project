@@ -95,7 +95,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return count;
@@ -133,7 +133,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return count;
@@ -175,7 +175,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return count;
@@ -219,7 +219,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return boardVO;
@@ -264,7 +264,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return list;
@@ -323,7 +323,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return list;
@@ -385,7 +385,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return list;
@@ -432,7 +432,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return list;
@@ -464,7 +464,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 		return num;
 	} // getNextNum

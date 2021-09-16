@@ -140,7 +140,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return list;
@@ -183,7 +183,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return memberVO;
@@ -217,7 +217,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtils.close(con, pstmt);
+			JdbcUtils.close(con, pstmt, rs);
 		}
 
 		return count;

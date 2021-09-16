@@ -39,12 +39,8 @@ ReviewDAO reviewDAO = ReviewDAO.getInstance();
 <head>
 <jsp:include page="/include/head.jsp" />
 <style>
-div.rank {
-	margin: 0 25px 0 25px;
-}
-
-.dday, div.rank, div.coming-soon {
-	border-radius: 10px;
+.movie-chart-list {
+	height: 600px;
 }
 
 img.movie-chart {
@@ -56,14 +52,7 @@ img.movie-chart {
 	padding-left: 30px;
 }
 
-.carousel-slider, .carousel-box {
-	height: 500px;
-}
 
-.dday, .coming-soon {
-	margin-bottom: 5px;
-	height: 45px;
-}
 </style>
 </head>
 <body class="brown lighten-4">
@@ -160,30 +149,10 @@ img.movie-chart {
 														%>☆☆☆☆☆<%	
 														}%><%=avgStar %> / </span>
 					<span>5.0</span>								
-			</div>
+						</div>
 
 					</div>
-					<%
-					int len = movieVO.getMovieTitle().length();
 					
-					
-					if (len <25 ) {
-					%>
-					<div class="section"></div>
-					<div class="section"></div>
-					
-					<%
-					}
-					%>
-					<%
-					if (len < 100) {
-					%>
-					<div class="section"></div>
-					<div class="section"></div>
-					
-					<%
-					}
-					%>
 
 				</div>
 				<%
