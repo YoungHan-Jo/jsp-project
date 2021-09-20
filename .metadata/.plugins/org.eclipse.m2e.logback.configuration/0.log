@@ -16385,3 +16385,8 @@ org.eclipse.core.runtime.CoreException: Could not resolve artifact com.servlets:
 2021-09-16 16:33:07,311 [Worker-33: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\YoungHan-Jo\Desktop\jsp-project\jsp-project\src\main\resources
 2021-09-16 16:33:07,312 [Worker-33: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
 2021-09-16 16:33:07,314 [Worker-33: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\YoungHan-Jo\Desktop\jsp-project\jsp-project\src\test\resources
+2021-09-20 23:57:22,600 [Worker-0: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2021-09-20 23:57:29,679 [Worker-3: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+2021-09-20 23:57:29,681 [Worker-3: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\YoungHan-Jo\Desktop\jsp-project\jsp-project\src\main\resources
+2021-09-20 23:57:29,683 [Worker-3: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+2021-09-20 23:57:29,685 [Worker-3: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\YoungHan-Jo\Desktop\jsp-project\jsp-project\src\test\resources
