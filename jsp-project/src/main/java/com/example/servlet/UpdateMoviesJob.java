@@ -103,15 +103,6 @@ public class UpdateMoviesJob implements Job {
 				dDay = li.select("em.dday").text().trim();
 				synopsis = crawlingSynopsis(movieNum);
 
-				// ======== todays_rank 추가 ========
-				ScheduledMovieVO scheduledMovieVO = new ScheduledMovieVO();
-				scheduledMovieVO.setScheduledRank(rank);
-				scheduledMovieVO.setMovieNum(movieNum);
-				scheduledMovieVO.setDDay(dDay);
-
-				scheduledMovieDAO.insert(scheduledMovieVO);
-				// ======== todays_rank 추가 완료 ========
-
 				// ======== movie 테이블 추가 ========
 				if (movieDAO.getCountByMovieNum(movieNum) == 0) { // movie 테이블에 존재하지 않을 때
 					MovieVO movieVO = new MovieVO();
@@ -124,6 +115,15 @@ public class UpdateMoviesJob implements Job {
 					movieDAO.insert(movieVO);
 				}
 				// ======== movie 테이블 추가 완료 ========
+				
+				// ======== scheduledMovie 추가 ========
+				ScheduledMovieVO scheduledMovieVO = new ScheduledMovieVO();
+				scheduledMovieVO.setScheduledRank(rank);
+				scheduledMovieVO.setMovieNum(movieNum);
+				scheduledMovieVO.setDDay(dDay);
+
+				scheduledMovieDAO.insert(scheduledMovieVO);
+				// ======== scheduledMovie 추가 완료 ========
 
 				num++;
 			} // if
