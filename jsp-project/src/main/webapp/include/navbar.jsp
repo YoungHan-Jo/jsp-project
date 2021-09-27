@@ -35,6 +35,7 @@ String id = (String) session.getAttribute("sessionLoginId");
 				}
 			%>
 			<li><a href="/member/myInfo.jsp">내 정보</a></li>
+			<li><a href="/chat/chat.jsp">채팅</a></li>
 			<li><a href="/member/logout.jsp"><button
 						class="waves-effect waves-light btn">로그아웃</button></a></li>
 			<%

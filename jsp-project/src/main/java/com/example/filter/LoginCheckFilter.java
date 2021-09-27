@@ -15,7 +15,13 @@ import javax.servlet.http.HttpSession;
 		,"/member/myInfo.jsp"
 		,"/member/modifyMember.jsp"
 		,"/member/changePasswd.jsp"
-		,"/member/removeMember.jsp" })
+		,"/member/removeMember.jsp"
+		,"/admin/managerMembers.jsp"
+		,"/board/boardWrite.jsp"
+		,"/board/modifyBoard.jsp"
+		,"/board/replyWrite.jsp"
+		,"/chat/chat.jsp"
+		,"/member/"})
 public class LoginCheckFilter implements Filter {
 
 	@Override

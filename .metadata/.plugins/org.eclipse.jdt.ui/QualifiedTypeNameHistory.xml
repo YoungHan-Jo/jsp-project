@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="org.jsoup.Jsoup"/>
-    <fullyQualifiedTypeName name="java.io.IOException"/>
-    <fullyQualifiedTypeName name="org.jsoup.nodes.Element"/>
-    <fullyQualifiedTypeName name="java.util.Iterator"/>
-    <fullyQualifiedTypeName name="crawling.CrawlingContent"/>
-    <fullyQualifiedTypeName name="java.sql.Connection"/>
-    <fullyQualifiedTypeName name="com.mysql.cj.xdevapi.PreparableStatement"/>
-    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
-    <fullyQualifiedTypeName name="org.quartz.SchedulerFactory"/>
-    <fullyQualifiedTypeName name="org.quartz.impl.StdSchedulerFactory"/>
     <fullyQualifiedTypeName name="org.quartz.Scheduler"/>
     <fullyQualifiedTypeName name="org.quartz.JobDetail"/>
     <fullyQualifiedTypeName name="com.example.servlet.UpdateMoviesJob"/>
@@ -58,6 +48,16 @@
     <fullyQualifiedTypeName name="org.mindrot.jbcrypt.BCrypt"/>
     <fullyQualifiedTypeName name="com.example.util.MemberDeserializer"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="javax.websocket.server.ServerEndpoint"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="javax.websocket.Session"/>
+    <fullyQualifiedTypeName name="java.util.Vector"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="javax.websocket.OnOpen"/>
+    <fullyQualifiedTypeName name="javax.websocket.OnMessage"/>
+    <fullyQualifiedTypeName name="java.io.IOException"/>
+    <fullyQualifiedTypeName name="javax.websocket.OnClose"/>
+    <fullyQualifiedTypeName name="lombok.Synchronized"/>
+    <fullyQualifiedTypeName name="javax.websocket.CloseReason"/>
+    <fullyQualifiedTypeName name="javax.websocket.OnError"/>
 </qualifiedTypeNameHistroy>
