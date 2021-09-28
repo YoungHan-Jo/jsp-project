@@ -83,15 +83,12 @@ div#chatBox,#first-chatbox {
 		//채팅방 참가 버튼 클릭 시
 		$('#btnJoinChat').on('click', function() {
 			nickname = '<%=id%>';
-
 			console.log(nickname);
-
 			connect(); // 웹소켓 객체생성하여 서버소켓과 접속 후 소켓이벤트 연결하기
 			addWinEvt(); // 브라우저에 beforeunload, unload 이벤트 연결
 		});
 
 		function connect() {
-
 			var url = 'ws://' + location.host + '/chat';
 			console.log('url : ' + url);
 
@@ -102,7 +99,6 @@ div#chatBox,#first-chatbox {
 			webSocket.onopen = onOpen; // 서버와 연결된 후 호출됨
 			webSocket.onclose = onClose; // 서버와 연결이 끊긴 후 호출됨
 			webSocket.onmessage = onMessage; // 서버로부터 메세지를 받으면 호출됨
-
 		}
 
 		function onOpen(event) {
@@ -116,19 +112,14 @@ div#chatBox,#first-chatbox {
 		function onClose(event) {
 			$('div#chatBox').append(
 					`<div class="chat-message">채팅방과의 연결이 끊어졌습니다.</div>`);
-
 			scrollDown();
 		}// onClose
-
+		
 		function onMessage(event) {
-
 			console.log(typeof event.data);
-
 			var str = event.data;
 			$('div#chatBox').append(`<div class="chat-message">\${str}</div>`);
-
 			scrollDown();
-
 		}//onMessage
 
 		// 채팅방 연결 끊기 버튼 클릭 시
