@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 public class JdbcUtils {
 
 	public static final String URL = "jdbc:mysql://localhost:3306/jspproject?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul";
@@ -17,8 +18,13 @@ public class JdbcUtils {
 		Connection con = null;
 
 		Class.forName("com.mysql.cj.jdbc.Driver");
-
+//
 		con = DriverManager.getConnection(URL, USER, PASSWD);
+		
+//		====== 커넥션 풀링으로 준비된 커넥션 객체들 중에서 한개를 빌려오기 ======
+//		Context context = new InitialContext();
+//		DataSource ds = (DataSource) context.lookup("java:comp/env/jdbc/jspproject");
+//		con = ds.getConnection(); // 커넥션풀에서 커넥션객체 한개 빌려오기
 
 		return con;
 	}
