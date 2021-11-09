@@ -28,6 +28,8 @@ if (BCrypt.checkpw(passwd, memberVO.getPasswd()) == true) { // 비밀번호 일�
 		}//for
 	}//if
 	
+	System.out.println("삭제할 memberVO : " + memberVO);
+	
 	//DB에서 데이터 삭제
 	memberDAO.deleteById(memberVO.getId());
 				

@@ -224,7 +224,7 @@ a{
 
 
 					<a class="btn waves-effect waves-light"
-						href="/board/boardList.jsp?tab=<%=tab%>&type=<%=type%>&keyword=<%=keyword%>&pageNum=<%=pageNum%>">
+						href="/board/boardList.jsp?tab=<%=tab%>&pageNum=<%=pageNum%>">
 						<i class="material-icons left">list</i>글목록
 					</a>
 				</div>
