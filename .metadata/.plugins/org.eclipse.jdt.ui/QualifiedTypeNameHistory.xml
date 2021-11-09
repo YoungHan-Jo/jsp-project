@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="org.quartz.Scheduler"/>
     <fullyQualifiedTypeName name="org.quartz.JobDetail"/>
     <fullyQualifiedTypeName name="com.example.servlet.UpdateMoviesJob"/>
     <fullyQualifiedTypeName name="org.quartz.Job"/>
@@ -60,4 +59,5 @@
     <fullyQualifiedTypeName name="lombok.Synchronized"/>
     <fullyQualifiedTypeName name="javax.websocket.CloseReason"/>
     <fullyQualifiedTypeName name="javax.websocket.OnError"/>
+    <fullyQualifiedTypeName name="com.mysql.cj.Session"/>
 </qualifiedTypeNameHistroy>
